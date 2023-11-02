@@ -18,7 +18,8 @@
     "helmet": "7.0.0",
     "http-status-codes": "^2.3.0",
     "joi": "17.11.0",
-    "morgan": "1.10.0"
+    "morgan": "1.10.0",
+    "oracledb": "^6.2.0"
   },
   "devDependencies": {
     "eslint": "8.52.0"
