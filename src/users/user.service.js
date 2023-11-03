@@ -9,11 +9,8 @@ const pool = await createPool()
 export class UserService {
   async create(user){
     const {error} = userSchema.validate(user) 
-    console.log(user)  
 
     // Aqui iria la misma logica de llamado a la base de datos
-
-    console.log(pool)
 
     if (error !== undefined){
       return {
