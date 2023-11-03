@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes"
 
-import { LoginService } from "./login.service"
+import { LoginService } from "./login.service.js"
 
 const loginService = new LoginService()
 

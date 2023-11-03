@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-import { schemaLogin } from "./login.schema"
+import { schemaLogin } from "./login.schema.js"
 
 export class LoginService{
   async login (usuario) {
