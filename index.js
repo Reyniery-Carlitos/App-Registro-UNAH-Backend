@@ -7,9 +7,10 @@ import bodyParser from 'body-parser'
 const { json } = bodyParser
 
 import userRouter from './src/users/user.router.js'
+import libroRouter from './src/libros/libros.router.js'
 
 const app = express()
-const PORT = process.env.PORT ?? 3000
+const PUERTO = process.env.PORT ?? 3002
 
 // Middlewars
 app.use(cors())
@@ -19,8 +20,9 @@ app.use(json())
 
 // Endpoints
 app.use('/api/v1/users', userRouter)
+app.use('/api/v1/libros', libroRouter)
 
 // Listen
-app.listen(PORT, () => {
-  console.log(`Server listen on port : ${PORT}`)
+app.listen(PUERTO, () => {
+  console.log(`Servidor escuchando en el puerto: ${PUERTO}`)
 })

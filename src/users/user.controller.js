@@ -8,6 +8,7 @@ export class UserController {
   async createUser(req, res) {
     try{
       const user = req.body
+      console.log(req.body)
       const result = await userService.create(user) // Validaciones de datos
       
       res

@@ -39,7 +39,8 @@ export async function fnSPGet(pool, nameSP, estructureSP, inSP) {
     }
 
     await resultSet.close();
-    return JSON.stringify(queryArray, null);
+    // return JSON.stringify(queryArray, null);
+    return queryArray
   } catch (error) {
     throw error;
   } finally {
