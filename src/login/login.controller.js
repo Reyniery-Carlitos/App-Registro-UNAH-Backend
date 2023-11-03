@@ -17,9 +17,10 @@ export class ControladorLogin{
 
       res
         .status(StatusCodes.OK)
+        .header('x-token', resultado.token)
         .json({
           mensaje: resultado.message,
-          data: { token: resultado.token, resultado: resultado.entidad }
+          data:  {resultado: resultado.entidad }
         });
     }catch (err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Error de servidor: ${err}`);
