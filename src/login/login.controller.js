@@ -21,7 +21,7 @@ export class ControladorLogin{
         .header('x-token', resultado.token)
         .json({
           mensaje: resultado.message,
-          data:  {resultado: resultado.entidad }
+          data:  {token: token, resultado: resultado.entidad }
         });
     }catch (err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Error de servidor: ${err}`);

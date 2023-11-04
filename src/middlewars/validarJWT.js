@@ -19,6 +19,8 @@ export default async function validarJWT(req = request, res = response, next) {
         .json({ mensaje: "No hay token en la peticion" });
     }
 
+    req.usuario = tokenDecodificado
+
     next();
   } catch (err) {
     res.status(StatusCodes.UNAUTHORIZED).json({ mensaje: "Token no valido" });
