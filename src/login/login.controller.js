@@ -1,3 +1,4 @@
+import {request, response} from 'express'
 import { StatusCodes } from "http-status-codes"
 
 import { LoginService } from "./login.service.js"
@@ -5,7 +6,7 @@ import { LoginService } from "./login.service.js"
 const loginService = new LoginService()
 
 export class ControladorLogin{
-  async Login (req, res) {
+  async Login (req = request, res = response) {
     try {
       const {username, contrasenia} = req.body
 

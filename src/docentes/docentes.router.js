@@ -4,10 +4,10 @@ import validarJWT from '../middlewars/validarJWT.js'
 import { esAdminRole } from '../middlewars/validarRoles.js'
 import { ControladorDocentes } from './docentes.controller.js'
 
-const docentesRouter = Router()
+const routerDocentes = Router()
 const controladorDocente = new ControladorDocentes()
 
 // Crear nuevo docente
-docentesRouter.post('/', validarJWT, esAdminRole, controladorDocente.crear)
+routerDocentes.post('/', validarJWT, esAdminRole, controladorDocente.crear)
 
-export default docentesRouter
+export default routerDocentes

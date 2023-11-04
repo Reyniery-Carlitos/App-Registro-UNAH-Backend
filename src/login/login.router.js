@@ -2,9 +2,9 @@ import { Router } from "express";
 
 import { ControladorLogin } from "./login.controller.js";
 
-const loginRouter = Router()
+const routerLogin = Router()
 const controladorLogin = new ControladorLogin()
 
-loginRouter.post('/', controladorLogin.Login)
+routerLogin.post('/', controladorLogin.Login)
 
-export default loginRouter
+export default routerLogin

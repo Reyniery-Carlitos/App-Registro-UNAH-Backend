@@ -1,15 +1,15 @@
 import {request, response} from 'express'
 
-import { DocentesService } from "./docentes.service.js"
+import { AspirantesService } from "./aspirantes.service"
 
-const docenteService = new DocentesService()
+const serviceAspirante = new AspirantesService()
 
-export class ControladorDocentes {
-  async crear (req = request, res = response) {
+export class ControladorAspirantes{
+  async crear(req = request, res = response) {
     try {
-      const docente = req.body
-
-      const resultado = await docenteService.crear(docente)
+      const aspirante = req.body
+  
+      const resultado = serviceAspirante.crear(aspirante)
 
       res
         .status(StatusCodes.OK)
@@ -20,5 +20,6 @@ export class ControladorDocentes {
     } catch (err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }
+    
   }
 }
