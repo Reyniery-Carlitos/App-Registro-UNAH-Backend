@@ -1,4 +1,5 @@
 import {request, response} from 'express'
+import { StatusCodes } from 'http-status-codes'
 
 import { DocentesService } from "./docentes.service.js"
 
@@ -14,11 +15,10 @@ export class ControladorDocentes {
       res
         .status(StatusCodes.OK)
         .json({
-          mensaje: resultado.message,
-          data: { resultado: resultado.entidad }
+          mensaje: resultado.mensaje
         });
     } catch (err) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
 }

@@ -1,6 +1,7 @@
 import {request, response} from 'express'
+import { StatusCodes } from 'http-status-codes'
 
-import { AspirantesService } from "./aspirantes.service"
+import { AspirantesService } from "./aspirantes.service.js"
 
 const serviceAspirante = new AspirantesService()
 
@@ -9,16 +10,15 @@ export class ControladorAspirantes{
     try {
       const aspirante = req.body
   
-      const resultado = serviceAspirante.crear(aspirante)
+      const resultado = await serviceAspirante.crear(aspirante)
 
       res
         .status(StatusCodes.OK)
         .json({
-          mensaje: resultado.message,
-          data: { resultado: resultado.entidad }
+          mensaje: resultado.mensaje
         });
     } catch (err) {
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
     
   }

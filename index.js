@@ -9,7 +9,7 @@ const { json } = bodyParser
 import routerLogin from './src/login/login.router.js'
 import routerDocentes from './src/docentes/docentes.router.js'
 import routerAspirantes from './src/aspirantes/aspirantes.router.js'
-import routerEstudiantes from './src/estudiantes/estudiantes.router.js'
+// import routerEstudiantes from './src/estudiantes/estudiantes.router.js'
 
 const app = express()
 const PUERTO = process.env.PORT ?? 3002
@@ -26,7 +26,7 @@ app.use(json())
 app.use('/api/v1/login', routerLogin)
 app.use('/api/v1/docentes', routerDocentes)
 app.use('/api/v1/aspirantes', routerAspirantes)
-app.use('/api/v1/estudiantes', routerEstudiantes)
+// app.use('/api/v1/estudiantes', routerEstudiantes)
 
 // Listen
 app.listen(PUERTO, () => {

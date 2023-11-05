@@ -18,11 +18,13 @@ export class ControladorLogin{
 
       res
         .status(StatusCodes.OK)
-        .header('x-token', resultado.token)
+        // .header('x-token', resultado.token)
         .json({
-          mensaje: resultado.message,
-          data:  {token: token, resultado: resultado.entidad }
+          mensaje: resultado.mensaje,
+          data:  resultado.entidad,
+          token: resultado.token
         });
+
     }catch (err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Error de servidor: ${err}`);
     }

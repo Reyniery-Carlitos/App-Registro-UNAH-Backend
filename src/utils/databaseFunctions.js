@@ -78,9 +78,9 @@ export async function fnSPCUD(pool, nameSP, inSP) {
 
     const resultSet = result.outBinds.outVAR;
 
-    const queryArray = { message: resultSet };
+    const queryArray = { mensaje: resultSet };
 
-    return JSON.stringify(queryArray, null);
+    return queryArray
   } catch (error) {
     throw error;
   } finally {
