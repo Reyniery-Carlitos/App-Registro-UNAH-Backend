@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 import { schemaLogin } from "./login.schema.js"
+import generarToken from '../utils/generarToken.js';
 
 export class LoginService{
   async login (usuario) {
@@ -39,7 +39,7 @@ export class LoginService{
       };
     }
 
-    const token = jwt.sign({ idUsuario: usuarioActual.id, rol: usuarioActual.rol }, process.env.JWT_SECRET);
+    const token = generarToken({ idUsuario: usuarioActual.id, rol: usuarioActual.rol })
 
     return {
       codigoEstado: StatusCodes.OK,

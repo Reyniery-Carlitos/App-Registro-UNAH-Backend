@@ -1,7 +1,7 @@
 import { request, response } from "express";
 import { StatusCodes } from "http-status-codes";
 
-export const esAdminRole = (req = request, res = response, next) => {
+export const esRolAdmin = (req = request, res = response, next) => {
   if (!req.usuario) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       mensaje: "Se quiere verificar el role sin validar el token primero",
@@ -18,7 +18,7 @@ export const esAdminRole = (req = request, res = response, next) => {
   next();
 };
 
-export const esCoordinadorRole = (req = request, res = response, next) => {
+export const esRolCoordinador = (req = request, res = response, next) => {
   if (!req.usuario) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       mensaje: "Se quiere verificar el role sin validar el token primero",
@@ -35,7 +35,7 @@ export const esCoordinadorRole = (req = request, res = response, next) => {
   next();
 }
 
-export const esJefeDeptoRole = (req = request, res = response, next) => {
+export const esRolJefeDepto = (req = request, res = response, next) => {
   if (!req.usuario) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       mensaje: "Se quiere verificar el role sin validar el token primero",
