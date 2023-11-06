@@ -17,8 +17,7 @@ export class LoginService{
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
         mensaje: `Ocurrio un error al iniciar sesión: ${error}`,
-        token: null,
-        entidad: null
+        token: null
       };
     }
     
@@ -34,20 +33,19 @@ export class LoginService{
       return {
         statusCode: StatusCodes.NOT_FOUND,
         mensaje: 'Usuario o contraseña incorrecto!',
-        token: null,
-        entity: null,
+        token: null
       };
     }
     
     const contraseniaBD = usuarioActual.mensaje.split(' ')[1]
     const esContraseniaCorrecta = await bcrypt.compare(contrasenia, contraseniaBD);
+    console.log(esContraseniaCorrecta)
     
     if (!esContraseniaCorrecta) {
       return {
         statusCode: StatusCodes.NOT_FOUND,
         mensaje: 'Usuario o contraseña incorrecto!',
-        token: null,
-        entity: null,
+        token: null
       };
     }
 

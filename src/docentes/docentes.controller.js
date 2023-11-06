@@ -8,7 +8,9 @@ const docenteService = new DocentesService()
 export class ControladorDocentes {
   async crear (req = request, res = response) {
     try {
-      const docente = req.body
+      const infoDocente = req.body
+      const docente = {...infoDocente, foto_empleado: req.file.filename}
+      console.log(infoDocente)
 
       const resultado = await docenteService.crear(docente)
 

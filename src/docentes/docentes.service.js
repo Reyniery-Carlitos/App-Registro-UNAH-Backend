@@ -17,16 +17,15 @@ export class DocentesService {
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
         mensaje: `Ocurrio un error al crear un nuevo docente: ${error}`,
-        token: null,
-        entidad: null
+        token: null
       };
     }
 
     const salt = await bcrypt.genSalt(10);
     const contrasenia = await bcrypt.hash(docente.contrasenia, salt) 
     
-    const {dni, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, foto_empleado, rol_id, carrera} = docente
-    const inVARS = [dni, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, contrasenia, foto_empleado, rol_id, carrera]
+    const {dni, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, foto_empleado, rol_id, carrera, telefono} = docente
+    const inVARS = [dni, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, contrasenia, foto_empleado, rol_id, carrera, telefono]
     
     const docenteActual = await fnSPCUD(pool, "CREAR_DOCENTE", inVARS);
 

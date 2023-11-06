@@ -8,15 +8,18 @@ export class LibroController {
   async createBook(req, res) {
     try{
       const book = req.body
-      console.log(req.body)
-      const result = await userService.create(book) // Validaciones de datos
-      
-      res
-      .status(result.statusCode)
-      .json({
-        message: result.message,
-        data: {result: result.entity}
-      })
+      console.log(req.file.filename)
+      // console.log(req.body)
+      // const result = await userService.create(book) // Validaciones de datos
+
+
+      res.status(StatusCodes.OK).json({mensaje: 'Libro creado'})
+      // res
+      // .status(result.statusCode)
+      // .json({
+      //   message: result.message,
+      //   data: {result: result.entity}
+      // })
     } catch(err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${error}`);
     }

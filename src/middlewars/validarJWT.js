@@ -19,7 +19,7 @@ export default async function validarJWT(req = request, res = response, next) {
         .json({ mensaje: "No hay token en la peticion" });
     }
 
-    req.usuario = tokenDecodificado
+    req.usuario = tokenDecodificado.rol
 
     next();
   } catch (err) {

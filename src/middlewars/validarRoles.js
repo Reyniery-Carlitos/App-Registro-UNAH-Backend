@@ -8,10 +8,11 @@ export const esRolAdmin = (req = request, res = response, next) => {
     });
   }
 
-  const { idUsuario, rol } = req.usuario;
+  const { rol } = req.usuario;
+  console.log(rol)
   if (rol !== "administrador") {
     return res.status(StatusCodes.UNAUTHORIZED).json({
-      mensaje: `${idUsuario} no es administrador`,
+      mensaje: `${rol} no es administrador`,
     });
   }
 

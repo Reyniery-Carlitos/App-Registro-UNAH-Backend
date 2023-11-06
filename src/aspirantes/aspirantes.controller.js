@@ -8,7 +8,10 @@ const serviceAspirante = new AspirantesService()
 export class ControladorAspirantes{
   async crear(req = request, res = response) {
     try {
-      const aspirante = req.body
+      const infoAspirante = req.body
+
+      const aspirante = {...infoAspirante, foto_certificado: req.file.filename}
+      console.log(aspirante)
   
       const resultado = await serviceAspirante.crear(aspirante)
 
