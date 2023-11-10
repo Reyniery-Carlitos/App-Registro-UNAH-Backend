@@ -35,4 +35,8 @@ export class ControladorAdmin{
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async configurarPeriodo(req = request, res = response) {
+    
+  }
 }

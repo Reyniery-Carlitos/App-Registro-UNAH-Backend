@@ -36,4 +36,9 @@ routerAdmin.post('/registrar-estudiantes',
   }
 , controladorAdmin.registrarEstudiantes)
 
+routerAdmin.post('/configuracion-periodo', 
+validarJWT,
+esRolAdmin,
+controladorAdmin.configurarPeriodo)
+
 export default routerAdmin

@@ -8,7 +8,7 @@ const controladorEstudiante = new ControladorEstudiantes()
 routerEstudiantes.post('/', controladorEstudiante.crearEstudiantes)
 routerEstudiantes.get('/')
 routerEstudiantes.get('/:id')
-routerEstudiantes.update('/:id')
+routerEstudiantes.update('/:cuenta')
 routerEstudiantes.delete('/:id')
 
 export default routerEstudiantes

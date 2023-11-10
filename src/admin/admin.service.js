@@ -89,4 +89,8 @@ export class AdminService {
       mensaje: `Estudiantes registrados correctamente`,
     };
   }
+
+  async configurarPeriodo() {
+    
+  }
 }

@@ -10,4 +10,8 @@ export class ControladorEstudiantes {
       })
       .catch((err) => console.log(err));
   }
+
+  async actualizarDatos(req = request, res = response) {
+    
+  }
 }
