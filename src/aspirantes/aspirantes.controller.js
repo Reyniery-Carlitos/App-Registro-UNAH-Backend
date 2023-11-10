@@ -23,6 +23,22 @@ export class ControladorAspirantes{
     } catch (err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
-    
+  }
+
+  async obtenerPorDni(req = request, res = response) {
+    try {
+      const dni = req.params.dni
+
+      const resultado = await serviceAspirante.obtenerDatosPorId(dni)
+
+      res
+      .status(StatusCodes.OK)
+      .json({
+        mensaje: resultado.mensaje,
+        data: resultado.entidad
+      })
+    } catch(err){
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
   }
 }

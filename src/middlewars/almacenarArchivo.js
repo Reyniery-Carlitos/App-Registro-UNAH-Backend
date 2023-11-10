@@ -23,11 +23,23 @@ function filtrarImgs(_, file, cb ) {
   }
 }
 
+function filtrarCSV(_, file, cb ) {
+  const extPermitidas = ['.csv']
+  const extArchivo = path.extname(file.originalname)
+  const esExtValida = extPermitidas.includes(extArchivo.toLowerCase())
+
+  if (esExtValida) {
+    cb(null, true)
+  } else {
+    cb(new Error(`Tipo de archivo invalido`), false)
+  }
+}
+
 export function errorHandler(err, req, res, next) {
   // if (err instanceof multer.MulterError) {
   return res.status(StatusCodes.BAD_REQUEST).json({ error: err.message });
 }
 
-const upload = multer({ storage: storage, fileFilter: filtrarImgs });
+export const upload = multer({ storage: storage, fileFilter: filtrarImgs });
+export const uploadCsv = multer({storage: storage, fileFilter: filtrarCSV})
 
-export default upload

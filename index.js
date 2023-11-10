@@ -9,6 +9,7 @@ const { json } = bodyParser
 import routerLogin from './src/login/login.router.js'
 import routerDocentes from './src/docentes/docentes.router.js'
 import routerAspirantes from './src/aspirantes/aspirantes.router.js'
+import routerAdmin from './src/admin/admin.router.js'
 // import libroRouter from './src/libros/libros.router.js'
 // import routerEstudiantes from './src/estudiantes/estudiantes.router.js'
 
@@ -24,6 +25,7 @@ app.use(json())
 // Endpoints
 // app.use('/api/v1/users', userRouter)
 // app.use('/api/v1/libros', libroRouter)
+app.use('/api/v1/admin', routerAdmin)
 app.use('/api/v1/login', routerLogin)
 app.use('/api/v1/docentes', routerDocentes)
 app.use('/api/v1/aspirantes', routerAspirantes)

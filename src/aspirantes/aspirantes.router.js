@@ -3,9 +3,7 @@ import { ControladorAspirantes } from "./aspirantes.controller.js";
 // import multer from "multer";
 // import { StatusCodes } from "http-status-codes";
 
-import upload, { errorHandler } from "../middlewars/almacenarArchivo.js";
-import multer from "multer";
-import { StatusCodes } from "http-status-codes";
+import {upload, errorHandler } from "../middlewars/almacenarArchivo.js";
 
 const routerAspirantes = Router()
 const controladorAspirante = new ControladorAspirantes()
@@ -19,5 +17,7 @@ routerAspirantes.post('/', function (req, res, next){
     }
   })
 }, controladorAspirante.crear)
+
+routerAspirantes.get('/:dni', controladorAspirante.obtenerPorDni)
 
 export default routerAspirantes
