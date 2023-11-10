@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router } from "express"
 import { ControladorAspirantes } from "./aspirantes.controller.js";
 // import multer from "multer";
 // import { StatusCodes } from "http-status-codes";
@@ -17,6 +17,8 @@ routerAspirantes.post('/', function (req, res, next){
     }
   })
 }, controladorAspirante.crear)
+
+routerAspirantes.get('/centros', controladorAspirante.obtenerCentros)
 
 routerAspirantes.get('/:dni', controladorAspirante.obtenerPorDni)
 

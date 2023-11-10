@@ -41,4 +41,19 @@ export class ControladorAspirantes{
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async obtenerCentros(req = request, res = response) {
+    try {
+      const resultado = await serviceAspirante.obtenerCentros()
+
+      res
+      .status(StatusCodes.OK)
+      .json({
+        mensaje: resultado.mensaje,
+        data: resultado.entidad
+      })
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }
