@@ -47,4 +47,45 @@ export default class ServiceAdmisiones {
       mensaje: `Notas ingresadas correctamente`,
     };
   }
+
+  async registrarEstudiantes(nombreArchivo) {
+    const rutaArchivo = path.join(
+      process.cwd(),
+      "src",
+      "public",
+      "uploads",
+      nombreArchivo
+    );
+
+    await leerCSV(rutaArchivo)
+      .then(async (data) => {
+        for (let item of data) {
+          const { DESCRIPCION, PERSONA_DNI, CAR_DISPONIBLE_ID } = item;
+          const estudianteActual = await fnSPCUD(pool, "INGRESAR_ESTUDIANTE", [
+            DESCRIPCION,
+            PERSONA_DNI,
+            +CAR_DISPONIBLE_ID,
+          ]);
+
+          if (estudianteActual === null) {
+            return {
+              codigoEstado: StatusCodes.BAD_REQUEST,
+              mensaje: `Error en el CSV de datos`,
+            };
+          }
+        }
+      })
+
+      .catch((err) => {
+        return {
+          codigoEstado: StatusCodes.BAD_REQUEST,
+          mensaje: `Error al leer CSV`,
+        };
+      });
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: `Estudiantes registrados correctamente`,
+    };
+  }
 }

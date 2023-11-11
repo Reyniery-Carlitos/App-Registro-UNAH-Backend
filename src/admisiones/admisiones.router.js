@@ -22,4 +22,18 @@ routerAdmisiones.post('/cargar-notas',
   }
 , controladorAdmisiones.cargarNotas)
 
+routerAdmin.post('/registrar-estudiantes', 
+  validarJWT,
+  esRolAdmin,
+  function (req, res, next){
+    uploadCsv.single('datos_estudiantes')(req, res, function(err) {
+      if (err) {
+        return errorHandler(err, req, res, next)
+      } else {
+        next()
+      }
+    })
+  }
+, controladorAdmisiones.registrarEstudiantes)
+
 export default routerAdmisiones
