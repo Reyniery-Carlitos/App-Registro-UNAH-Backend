@@ -10,6 +10,7 @@ export default class ControladorCarreras{
     try {
       const {idCentro} = req.query
       let resultado = ''
+      
       if(idCentro) {
         resultado = await serviceCarreras.obtenerCarrerasPorCentro(idCentro)
       } else {

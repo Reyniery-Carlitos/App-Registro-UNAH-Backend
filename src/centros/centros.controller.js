@@ -11,6 +11,7 @@ export default class ControladorCentros {
       const {idCarrera} = req.query
       
       let resultado = ''
+      
       if(idCarrera) {
         resultado = await serviceCentros.obtenerCentrosPorIdCarrera(idCarrera)
       } else {
