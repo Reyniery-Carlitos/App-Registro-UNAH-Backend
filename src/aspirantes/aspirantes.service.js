@@ -15,7 +15,7 @@ export class AspirantesService{
     if (error) {
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
-        mensaje: `Ocurrio un error al crear un nuevo aspirante: ${error}`
+        mensaje: `Ocurrio un error al crear un nuevo aspirante: ${error.details[0].message}`
       };
     }
 
@@ -69,27 +69,6 @@ export class AspirantesService{
       codigoEstado: StatusCodes.OK,
       mensaje: `Usuario con id ${dni} encontrado`,
       entidad: usuarioActual
-    }
-  }
-
-  async obtenerCentros() {
-    const estructureSP = ['ID', 'NOMBRE']
-    
-    const inVARS = []
-    const centros = await fnSPGet(pool, "OBTENER_CENTROS", estructureSP, inVARS)
-
-    console.log(centros)
-    if (centros === null) {
-      return {
-        codigoEstado: StatusCodes.NOT_FOUND,
-        mensaje: `No se ha podido encontrar ningun centro`
-      }
-    }
-
-    return {
-      codigoEstado: StatusCodes.OK,
-      mensaje: 'Centros obtenidos correctamente',
-      entidad: centros
     }
   }
 }

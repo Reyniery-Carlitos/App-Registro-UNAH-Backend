@@ -8,6 +8,8 @@ import {upload, errorHandler } from "../middlewars/almacenarArchivo.js";
 const routerAspirantes = Router()
 const controladorAspirante = new ControladorAspirantes()
 
+routerAspirantes.get('/:dni', controladorAspirante.obtenerPorDni)
+
 routerAspirantes.post('/', function (req, res, next){
   upload.single('foto_certificado')(req, res, function(err) {
     if (err) {
@@ -17,9 +19,5 @@ routerAspirantes.post('/', function (req, res, next){
     }
   })
 }, controladorAspirante.crear)
-
-routerAspirantes.get('/centros', controladorAspirante.obtenerCentros)
-
-routerAspirantes.get('/:dni', controladorAspirante.obtenerPorDni)
 
 export default routerAspirantes

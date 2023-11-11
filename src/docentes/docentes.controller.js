@@ -15,7 +15,7 @@ export class ControladorDocentes {
       const resultado = await docenteService.crear(docente)
 
       res
-        .status(StatusCodes.OK)
+        .status(resultado.codigoEstado)
         .json({
           mensaje: resultado.mensaje
         });

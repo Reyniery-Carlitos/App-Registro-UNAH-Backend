@@ -16,7 +16,7 @@ export class DocentesService {
     if (error !== undefined) {
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
-        mensaje: `Ocurrio un error al crear un nuevo docente: ${error}`,
+        mensaje: `Ocurrio un error al crear un nuevo docente: ${error.details[0].message}`,
         token: null
       };
     }

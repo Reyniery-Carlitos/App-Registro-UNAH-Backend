@@ -17,7 +17,7 @@ export class ControladorLogin{
       const resultado = await loginService.login(req.body)
 
       res
-        .status(StatusCodes.OK)
+        .status(resultado.codigoEstado)
         // .header('x-token', resultado.token)
         .json({
           mensaje: resultado.mensaje,

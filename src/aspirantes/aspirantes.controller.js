@@ -16,7 +16,7 @@ export class ControladorAspirantes{
       const resultado = await serviceAspirante.crear(aspirante)
 
       res
-        .status(StatusCodes.OK)
+        .status(resultado.codigoEstado)
         .json({
           mensaje: resultado.mensaje
         });
@@ -32,27 +32,12 @@ export class ControladorAspirantes{
       const resultado = await serviceAspirante.obtenerDatosPorId(dni)
 
       res
-      .status(StatusCodes.OK)
+      .status(resultado.codigoEstado)
       .json({
         mensaje: resultado.mensaje,
         data: resultado.entidad
       })
     } catch(err){
-      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
-    }
-  }
-
-  async obtenerCentros(req = request, res = response) {
-    try {
-      const resultado = await serviceAspirante.obtenerCentros()
-
-      res
-      .status(StatusCodes.OK)
-      .json({
-        mensaje: resultado.mensaje,
-        data: resultado.entidad
-      })
-    } catch(err) {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
