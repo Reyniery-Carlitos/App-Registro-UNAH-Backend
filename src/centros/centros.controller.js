@@ -20,4 +20,20 @@ export default class ControladorCentros {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async obtenerCentrosPorIdCarrera(req = request, res = response) {
+    try {
+      const {idCarrera} = req.params
+      const resultado = await serviceCentros.obtenerCentrosPorIdCarrera(idCarrera)
+
+      res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        data: resultado.entidad
+      })
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }

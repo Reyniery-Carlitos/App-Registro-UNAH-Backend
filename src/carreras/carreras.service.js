@@ -20,10 +20,10 @@ export default class ServiceCarreras {
     [], 
     {outFormat: OracleDB.OUT_FORMAT_OBJECT})
   
-    if (carreras.rows === null) {
+    if (carreras.rows.length === 0) {
       return {
         codigoEstado: StatusCodes.NOT_FOUND,
-        mensaje: `No se ha podido encontrar ningun centro`
+        mensaje: `No se ha podido encontrar ninguna carrera`
       }
     }
   
