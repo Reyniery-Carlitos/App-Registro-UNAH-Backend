@@ -1,4 +1,8 @@
-import { fnSPGet } from '../utils/databaseFunctions.js'
+// const estructureSP = ['ID', 'NOMBRE']
+
+// const inVARS = []
+// const centros = await fnSPGet(pool, "OBTENER_CENTROS", estructureSP, inVARS)
+// import { fnSPGet } from '../utils/databaseFunctions.js'
 import { StatusCodes } from 'http-status-codes'
 
 import createPool from '../database/database.config.js'
@@ -8,10 +12,6 @@ const pool = await createPool()
 
 export default class CentrosService{
   async obtenerCentros() {
-    // const estructureSP = ['ID', 'NOMBRE']
-    
-    // const inVARS = []
-    // const centros = await fnSPGet(pool, "OBTENER_CENTROS", estructureSP, inVARS)
     const centros = await (await pool.getConnection()).execute('SELECT * FROM CENTRO', [], {outFormat: OracleDB.OUT_FORMAT_OBJECT})
     
     if (centros.rows.length === 0) {
