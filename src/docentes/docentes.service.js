@@ -36,20 +36,6 @@ export class DocentesService {
       }
     }
 
-    // Buscara contra la base de datos si existe un docente con este mismo usuario
-    // const existeDocente = await 
-
-    // return {
-    //   codigoEstado: StatusCodes.BAD_REQUEST,
-    //   mensaje: 'Ya existe un docente registrado con el mismo numero de empleado',
-    //   entidad: null
-    // }
-
-    // const salt = await bcrypt.genSalt(10)
-
-    // // Aqui va la logica para almadenar el docente nuevo en la base de datos
-    // const usuarioCreado = await {docente, contrasenia}
-
     return {
       codigoEstado: StatusCodes.OK,
       mensaje: 'Docente creado con éxito!.'

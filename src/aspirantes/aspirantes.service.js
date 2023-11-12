@@ -10,7 +10,6 @@ const pool = await createPool()
 export class AspirantesService{
   async crear(aspirante) {
     const {error} = schemaAspirantes.validate(aspirante)
-    console.log(aspirante)
 
     if (error) {
       return {

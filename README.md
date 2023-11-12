@@ -185,6 +185,8 @@ Estructura de carpetas modular
     }
   ```
 
+  - Descargar CSV estudiantes admitidos (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admisiones/estudiantes-admitidos
+
 - **Centros**
   - Obtener centros: GET http://localhost:3001/api/v1/centros/
 

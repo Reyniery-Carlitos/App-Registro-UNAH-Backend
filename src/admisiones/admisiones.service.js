@@ -4,6 +4,7 @@ import path from 'node:path'
 import { fnSPCUD } from '../utils/databaseFunctions.js';
 import { leerCSV } from '../utils/leerCSV.js';
 import createPool from '../database/database.config.js';
+import crearCsv from '../utils/escribir-csv.js';
 
 const pool = await createPool()
 
@@ -87,5 +88,34 @@ export default class ServiceAdmisiones {
       codigoEstado: StatusCodes.OK,
       mensaje: `Estudiantes registrados correctamente`,
     };
+  }
+
+  async obtenerCsvAspirantesAprobados() {
+    const rutaArchivo = path.join(
+      process.cwd(),
+      "src",
+      "public",
+      "csv",
+      "aspirantes-admitidos.csv"
+    );
+    
+    const csvWriter = crearCsv(rutaArchivo)
+
+    const record = [
+      {dni: '0801200198765', nombre_completo: 'Carlos Reyniery Rubio', carrera: 'Ingenieria en sistemas', direccion: 'Col. El Sauce', correo: 'carlos@gmail.com', centro: 'Ciudad universitaria, CU'}
+    ]
+
+    csvWriter.writeRecords(record)
+    .then(() => {
+      console.log('Done')
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      entidad: rutaArchivo
+    }
   }
 }

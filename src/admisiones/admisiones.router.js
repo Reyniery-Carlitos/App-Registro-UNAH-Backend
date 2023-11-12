@@ -19,8 +19,9 @@ routerAdmisiones.post('/cargar-notas',
         next()
       }
     })
-  }
-, controladorAdmisiones.cargarNotas)
+  }, 
+  controladorAdmisiones.cargarNotas
+)
 
 routerAdmisiones.post('/registrar-estudiantes', 
   validarJWT,
@@ -33,7 +34,14 @@ routerAdmisiones.post('/registrar-estudiantes',
         next()
       }
     })
-  }
-, controladorAdmisiones.registrarEstudiantes)
+  },
+  controladorAdmisiones.registrarEstudiantes
+)
+
+routerAdmisiones.get('/estudiantes-admitidos', 
+  // validarJWT,
+  // esRolAdmin, 
+  controladorAdmisiones.obtenerCsvAspirantesAprobados
+)
 
 export default routerAdmisiones
