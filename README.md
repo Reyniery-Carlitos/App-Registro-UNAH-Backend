@@ -181,5 +181,21 @@ Estructura de carpetas modular
 Levantar el proyecto en modo de desarrollo
 
 ## Desarrolladores ​🦾​
+
+Backend: 
+
 [Carlos Rubio](https://github.com/Reyniery-Carlitos) ​🐺​
+
+Base de datos:
+
+[Luis Lainez](https://github.com/L015)
+
+[Alex ](https://github.com/Darnai)
+
+Frontend:
+
+[Mario Zelaya](https://github.com/MarioZ18)
+
+[Joel Rodriguez](https://github.com/joelr-2002)
+
 
