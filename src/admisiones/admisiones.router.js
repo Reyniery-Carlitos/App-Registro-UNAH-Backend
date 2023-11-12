@@ -22,7 +22,7 @@ routerAdmisiones.post('/cargar-notas',
   }
 , controladorAdmisiones.cargarNotas)
 
-routerAdmin.post('/registrar-estudiantes', 
+routerAdmisiones.post('/registrar-estudiantes', 
   validarJWT,
   esRolAdmin,
   function (req, res, next){

@@ -119,7 +119,7 @@ Estructura de carpetas modular
 - **Docentes:**
   - Crear docentes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/docentes 
 
-      Formulario con las siguientes opciones
+      Formulario con los siguientes datos
   
   ```
     {
@@ -141,7 +141,7 @@ Estructura de carpetas modular
 - **Apirantes:** 
   - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
   
-  Formulario con las siguientes opciones
+    Formulario con los siguientes datos
   
   ```
     {
@@ -159,6 +159,69 @@ Estructura de carpetas modular
       "foto_certificado": image
     }
   ```
+
+  - Obtener datos aspirante: GET http://localhost:3001/api/v1/apirantes/dni 
+
+    dni: es una dni valida del aspirante que se quiera obtener la info por ej. 0801200100569
+
+- **Admisiones**
+  - Cargar notas (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/cargar-notas
+
+    Formulario con los siguientes datos
+
+  ```
+    {
+      "notas_aspirantes": csv 
+    }
+  ``` 
+
+  - Registrar estudiantes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/registrar-estudiantes
+
+    Formulario con los siguientes datos
+  
+  ```
+    {
+      "datos_estudiantes": csv
+    }
+  ```
+
+- **Centros**
+  - Obtener centros: GET http://localhost:3001/api/v1/centros/
+
+  - Obtener centros por id Carrera: GET http://localhost:3001/api/v1/centros/?idCarrera=id
+
+    id = id de una carrera valida por ej. 1
+
+- **Admin**
+  - Configurar periodo (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admin/configuracion-periodo
+
+    Formulario con los siguientes datos
+
+  ```
+    {
+      "p_fec_nota_ini": "MM/DD/YY",
+      "p_fec_nota_fin": "MM/DD/YY",
+      "p_periodo_periodo": number,
+      "p_periodo_anio": "YYYY",
+      "p_periodo_duracion_id": string,
+      "p_fec_ini_plan": "MM/DD/YY",
+      "p_fec_final_plan": "MM/DD/YY",
+      "p_fec_can_exp_ini": "MM/DD/YY",
+      "p_fec_can_exp_fin": "MM/DD/YY",
+      "p_fec_periodo_ini": "MM/DD/YY",
+      "p_fec_periodo_fin": "MM/DD/YY"
+    }
+  ```
+
+- **Carreras**
+  - Obtener carreras: GET http://localhost:3001/api/v1/carreras/
+
+  - Obtener carreras por id centro: http://localhost:3001/api/v1/carreras/?idCentro=id
+
+    id = id de un centro valido por ej. 1
+
+- **Roles**
+  - Obtener roles: GET http://localhost:3001/api/v1/roles/
 
 ## Tecnologias 🛠️
 ---
@@ -188,14 +251,14 @@ Backend:
 
 Base de datos:
 
-[Luis Lainez](https://github.com/L015)
+[Luis Lainez](https://github.com/L015) ​​🚀​
 
-[Alex ](https://github.com/Darnai)
+[Alex Espinoza](https://github.com/Darnai) ​​🚀​
 
 Frontend:
 
-[Mario Zelaya](https://github.com/MarioZ18)
+[Mario Zelaya](https://github.com/MarioZ18) ​​🚀​
 
-[Joel Rodriguez](https://github.com/joelr-2002)
+[Joel Rodriguez](https://github.com/joelr-2002) ​​🚀​
 
 
