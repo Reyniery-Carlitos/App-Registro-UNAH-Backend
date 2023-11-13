@@ -237,7 +237,12 @@ Estructura de carpetas modular
 - Nodemailer
 - Multer
 - Cors
-- StatusCodes
+- http-status-codes
+- csv-writer
+- csv-parser
+- bcrypt 
+- Joi 
+- ESLINT
 
 ## Scripts ⚒️​
 ---

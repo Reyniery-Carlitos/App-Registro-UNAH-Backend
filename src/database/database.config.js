@@ -11,7 +11,6 @@ let pool;
 async function createPool() {
     try {
         pool = await OracleDB.createPool(dbConfig);
-        console.log('Pool de conexiones exitosos');
         return pool; // Devolvemos el pool para poder usarlo fuera del módulo
         
     } catch (error) {

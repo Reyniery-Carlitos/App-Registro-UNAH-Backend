@@ -27,11 +27,10 @@ export class LoginService{
     // console.log(contraseniaBD)
     const inVARS = [username]
     const usuarioActual = await fnSPCUD(pool,"LOGIN_SP", inVARS);
-    console.log(usuarioActual.mensaje)
 
     if (usuarioActual.mensaje === null) {
       return {
-        statusCode: StatusCodes.NOT_FOUND,
+        codigoEstado: StatusCodes.NOT_FOUND,
         mensaje: 'Usuario o contraseña incorrecto!',
         token: null
       };
@@ -39,7 +38,6 @@ export class LoginService{
     
     const contraseniaBD = usuarioActual.mensaje.split(' ')[1]
     const esContraseniaCorrecta = await bcrypt.compare(contrasenia, contraseniaBD);
-    console.log(esContraseniaCorrecta)
     
     if (!esContraseniaCorrecta) {
       return {

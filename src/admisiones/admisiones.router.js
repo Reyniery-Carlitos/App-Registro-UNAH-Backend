@@ -39,8 +39,8 @@ routerAdmisiones.post('/registrar-estudiantes',
 )
 
 routerAdmisiones.get('/estudiantes-admitidos', 
-  // validarJWT,
-  // esRolAdmin, 
+  validarJWT,
+  esRolAdmin, 
   controladorAdmisiones.obtenerCsvAspirantesAprobados
 )
 

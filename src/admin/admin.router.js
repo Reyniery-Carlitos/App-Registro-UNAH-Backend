@@ -8,8 +8,13 @@ const routerAdmin = Router()
 const controladorAdmin = new ControladorAdmin()
 
 routerAdmin.post('/configuracion-periodo', 
-validarJWT,
-esRolAdmin,
+// validarJWT,
+// esRolAdmin,
 controladorAdmin.configurarPeriodo)
+
+// routerAdmin.post('/configuracion-matricula', 
+// validarJWT,
+// esRolAdmin,
+// controladorAdmin.configurarMatricula)
 
 export default routerAdmin

@@ -3,7 +3,7 @@ import path from "node:path";
 
 import createPool from "../database/database.config.js";
 import { fnSPCUD, fnSPGet } from "../utils/databaseFunctions.js";
-import { schemaConfigurarPeriodo } from "./admin.schema.js";
+import { schemaConfigurarMatricula, schemaConfigurarPeriodo } from "./admin.schema.js";
 import formatearFecha from '../utils/formatearFechas.js'
 
 
@@ -11,7 +11,8 @@ const pool = await createPool()
 
 export class AdminService {
   async configurarPeriodo(data) {
-    const {error} = schemaConfigurarPeriodo.validate(data)
+    const {periodo, matricula} = data
+    const {error} = schemaConfigurarPeriodo.validate(periodo)
 
     if (error) {
       return {
@@ -21,44 +22,73 @@ export class AdminService {
       };
     }
   
-    const {
-      p_fec_nota_ini,
-      p_fec_nota_fin,
-      p_periodo_periodo,
-      p_periodo_anio,
-      p_periodo_duracion_id,
-      p_fec_ini_plan,
-      p_fec_final_plan,
-      p_fec_can_exp_ini,
-      p_fec_can_exp_fin,
-      p_fec_periodo_ini,
-      p_fec_periodo_fin
-    } = data;
+    for(let item of matricula){
+      const {error: error2} = schemaConfigurarMatricula.validate(item)
 
-    // console.log(formatearFecha(p_fec_nota_fin))
-
-    const nuevoPeriodo = await fnSPCUD(pool, "INGRESAR_PERIODO", [
-      formatearFecha(p_fec_nota_ini),
-      formatearFecha(p_fec_nota_fin),
-      p_periodo_periodo,
-      p_periodo_anio,
-      formatearFecha(p_periodo_duracion_id),
-      formatearFecha(p_fec_ini_plan),
-      formatearFecha(p_fec_final_plan),
-      formatearFecha(p_fec_can_exp_ini),
-      formatearFecha(p_fec_can_exp_fin),
-      formatearFecha(p_fec_periodo_ini),
-      formatearFecha(p_fec_periodo_fin)
-    ]);
-
-    console.log(nuevoPeriodo)
-
-    if (nuevoPeriodo === null) {
-      return {
-        codigoEstado: StatusCodes.BAD_REQUEST,
-        mensaje: `Algun dato invalido`,
-      };
+      if (error2) {
+        return {
+          codigoEstado: StatusCodes.BAD_REQUEST,
+          mensaje: `Ocurrio un error al crear una nueva configuracion de matricula: ${error2.details[0].message}`,
+          token: null
+        };
+      }
     }
+
+    // const {
+    //   p_fec_nota_ini,
+    //   p_fec_nota_fin,
+    //   p_periodo_periodo,
+    //   p_periodo_anio,
+    //   p_periodo_duracion_id,
+    //   p_fec_ini_plan,
+    //   p_fec_final_plan,
+    //   p_fec_can_exp_ini,
+    //   p_fec_can_exp_fin,
+    //   p_fec_periodo_ini,
+    //   p_fec_periodo_fin
+    // } = data.periodo;
+
+    // const nuevoPeriodo = await fnSPCUD(pool, "INGRESAR_PERIODO", [
+    //   p_fec_nota_ini,
+    //   p_fec_nota_fin,
+    //   p_periodo_periodo,
+    //   p_periodo_anio,
+    //   p_periodo_duracion_id,
+    //   p_fec_ini_plan,
+    //   p_fec_final_plan,
+    //   p_fec_can_exp_ini,
+    //   p_fec_can_exp_fin,
+    //   p_fec_periodo_ini,
+    //   p_fec_periodo_fin
+    // ]);
+
+    // if (nuevoPeriodo === null) {
+    //   return {
+    //     codigoEstado: StatusCodes.BAD_REQUEST,
+    //     mensaje: `Algun dato invalido`,
+    //   };
+    // }  
+
+    // for(let item of matricula){
+    //   const resMatricula = await fnSPCUD(pool, "INSERTAR_EN_CONF_MATRICULA", [
+    //     item.p_indice_inicio,
+    //     item.p_periodo_periodo,
+    //     item.p_periodo_anio,
+    //     item.p_periodo_duracion_id,
+    //     item.p_indice_inicio,
+    //     item.p_indice_final,
+    //     item.p_fecha_inicio,
+    //     item.p_fecha_final,
+    //     item.p_nombre
+    //   ]);
+
+    //   if (resMatricula === null) {
+    //     return {
+    //       codigoEstado: StatusCodes.BAD_REQUEST,
+    //       mensaje: `Algun dato invalido`,
+    //     };
+    //   }
+    // }                                                                                                                                   
 
     return {
       codigoEstado: StatusCodes.OK,

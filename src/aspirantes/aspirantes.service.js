@@ -57,7 +57,7 @@ export class AspirantesService{
     const usuarioActual = await fnSPGet(pool, "OBTENER_DATOS_ASPIRANTE", estructureSP, inVARS)
 
     console.log(usuarioActual)
-    if (usuarioActual === null) {
+    if (usuarioActual === null || !usuarioActual) {
       return {
         codigoEstado: StatusCodes.NOT_FOUND,
         mensaje: `No se ha podido encontrar el usuario con id: ${dni}`
