@@ -4,7 +4,7 @@ import { StatusCodes } from "http-status-codes";
 export const esRolAdmin = (req = request, res = response, next) => {
   if (!req.usuario) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      mensaje: "Se quiere verificar el role sin validar el token primero",
+      mensaje: "Se quiere verificar el rol sin validar el token primero",
     });
   }
 
@@ -22,7 +22,7 @@ export const esRolAdmin = (req = request, res = response, next) => {
 export const esRolCoordinador = (req = request, res = response, next) => {
   if (!req.usuario) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      mensaje: "Se quiere verificar el role sin validar el token primero",
+      mensaje: "Se quiere verificar el rol sin validar el token primero",
     });
   }
 
@@ -39,7 +39,7 @@ export const esRolCoordinador = (req = request, res = response, next) => {
 export const esRolJefeDepto = (req = request, res = response, next) => {
   if (!req.usuario) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      mensaje: "Se quiere verificar el role sin validar el token primero",
+      mensaje: "Se quiere verificar el rol sin validar el token primero",
     });
   }
 
@@ -62,4 +62,21 @@ export const esRolAdminOJefe = (req = request, res = response, next) => {
       mensaje: `${idUsuario} no es ni administrador ni jefe de departamento`,
     });
   } 
+}
+
+export const esRolDocente = (req = request, res = response, next) => {
+  if (!req.usuario) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      mensaje: "Se quiere verificar el rol sin validar el token primero",
+    });
+  }
+
+  const { idUsuario, rol } = req.usuario;
+  if (rol !== "Docente") {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      mensaje: `${idUsuario} no es un docente`,
+    });
+  }
+
+  next();
 }

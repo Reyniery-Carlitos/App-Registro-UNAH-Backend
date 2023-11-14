@@ -66,8 +66,36 @@ export class DocentesService {
   
     return {
       codigoEstado: StatusCodes.OK,
-      mensaje: 'Centros obtenidos correctamente',
+      mensaje: 'Docentes obtenidos correctamente',
       entidad: docentes.rows
+    }
+  }
+
+  async obtenerDocentePorNEmpleado(nEmpleado){
+    const docente = await (await pool.getConnection()).execute(`
+      SELECT d.N_EMPLEADO, d.PERSONA_DNI, p.PRIMERNOMBRE, p.SEGUNDONOMBRE, p.PRIMERAPELLIDO, p.SEGUNDOAPELLIDO, p.CORREOELECTRONICO, p.DIRECCION, p.TELEFONO, d.FOTOEMPLEADO, r.ROL, c.NOM_CARRERA FROM DOCENTE d 
+      INNER JOIN ROL r 
+      ON r.ID = d.ROL_ID 
+      INNER JOIN CARRERA c 
+      ON d.CAR_DISPONIBLE_ID = c.ID 
+      INNER JOIN PERSONA p 
+      ON p.DNI = d.PERSONA_DNI 
+      WHERE d.N_EMPLEADO = :nEmpleado
+    `, 
+    [nEmpleado], 
+    {outFormat: OracleDB.OUT_FORMAT_OBJECT})
+
+    if (docente.rows.length === 0) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `No se ha podido encontrar ningun docente en la base de datos`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Docente obtenido correctamente',
+      entidad: docente.rows
     }
   }
 }

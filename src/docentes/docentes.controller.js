@@ -9,7 +9,7 @@ export class ControladorDocentes {
   async crear (req = request, res = response) {
     try {
       const infoDocente = req.body
-      const docente = {...infoDocente, foto_empleado: req.file.filename}
+      const docente = {...infoDocente, foto_empleado: "/src/public/uploads/" + req.file.filename}
       console.log(infoDocente)
 
       const resultado = await docenteService.crear(docente)
@@ -27,6 +27,23 @@ export class ControladorDocentes {
   async obtenerDocentes(req = request, res = response) {
     try {
       const resultado = await docenteService.obtenerDocentes()
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data: resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async obtenerDocentePorNEmpleado(req = request, res = response) {
+    try {
+      const nEmpleado = req.params.nEmpleado
+      console.log(nEmpleado)
+      const resultado = await docenteService.obtenerDocentePorNEmpleado(nEmpleado)
 
       res
         .status(resultado.codigoEstado)

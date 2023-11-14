@@ -140,6 +140,10 @@ Estructura de carpetas modular
 
   - Obtener docentes (Solo administradores y jefes de departamento tienen acceso): GET http://localhost:3001/api/v1/docentes 
 
+  - Obtener docente (Solo docentes tienen acceso): GET http://localhost:3001/api/v1/docentes/:nEmpleado
+
+    nEmpleado = Es un numero de empleado valido por ej. 20246001073
+
 - **Apirantes:** 
   - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
   

@@ -10,7 +10,7 @@ export class ControladorAspirantes{
     try {
       const infoAspirante = req.body
 
-      const aspirante = {...infoAspirante, foto_certificado: req.file.filename}
+      const aspirante = {...infoAspirante, foto_certificado: "/src/public/uploads/" + req.file.filename}
       console.log(aspirante)
   
       const resultado = await serviceAspirante.crear(aspirante)
