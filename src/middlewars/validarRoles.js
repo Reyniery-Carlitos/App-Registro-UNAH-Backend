@@ -52,3 +52,14 @@ export const esRolJefeDepto = (req = request, res = response, next) => {
 
   next();
 }
+
+export const esRolAdminOJefe = (req = request, res = response, next) => {
+  if(req.esRolAdmin || req.esRolJefeDepto) {
+
+    next()
+  } else {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      mensaje: `${idUsuario} no es ni administrador ni jefe de departamento`,
+    });
+  } 
+}
