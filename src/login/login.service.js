@@ -48,7 +48,7 @@ export class LoginService{
     }
 
     const rolUsuario = {rol: usuarioActual.mensaje.split(' ')[0]}
-    const token = generarToken({rol: rolUsuario, username: usuario.username})
+    const token = generarToken({rol: rolUsuario.rol, username: usuario.username})
 
     return {
       codigoEstado: StatusCodes.OK,
