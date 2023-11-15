@@ -159,14 +159,20 @@ export default class ServiceAdmisiones {
       "csv",
       "aspirantes-admitidos.csv"
     );
+
+    const estructureSP = ["DNI", "PRIORIDAD"]
+    const dataEstudiante = await fnSPGet(pool, "OBTENER_CSV_ESTUDIANTE", estructureSP, [])
+
+    if(dataEstudiante.mensaje === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: `Error al descargar el CSV`,
+      };
+    }
     
     const csvWriter = crearCsv(rutaArchivo)
 
-    const record = [
-      {dni: '0801200198765', nombre_completo: 'Carlos Reyniery Rubio', carrera: 'Ingenieria en sistemas', direccion: 'Col. El Sauce', correo: 'carlos@gmail.com', centro: 'Ciudad universitaria, CU'}
-    ]
-
-    csvWriter.writeRecords(record)
+    csvWriter.writeRecords(dataEstudiante)
     .then(() => {
       console.log('Done')
     })
