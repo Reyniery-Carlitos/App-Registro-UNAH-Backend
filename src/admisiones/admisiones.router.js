@@ -9,8 +9,8 @@ const routerAdmisiones = Router()
 const controladorAdmisiones = new ControladorAdmisiones()
 
 routerAdmisiones.post('/cargar-notas', 
-  validarJWT,
-  esRolAdmin,
+  // validarJWT,
+  // esRolAdmin,
   function (req, res, next){
     uploadCsv.single('notas_aspirantes')(req, res, function(err) {
       if (err) {

@@ -11,8 +11,8 @@ const controladorDocente = new ControladorDocentes()
 // validarJWT, esRolAdmin,
 // Crear nuevo docente
 routerDocentes.post('/', 
-validarJWT, 
-esRolAdmin, 
+// validarJWT, 
+// esRolAdmin, 
 upload.single('foto_empleado'), controladorDocente.crear)
 
 routerDocentes.get('/:nEmpleado', 

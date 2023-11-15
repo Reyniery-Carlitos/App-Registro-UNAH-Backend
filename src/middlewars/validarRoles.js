@@ -9,8 +9,7 @@ export const esRolAdmin = (req = request, res = response, next) => {
   }
 
   const { rol } = req.usuario;
-  console.log(rol)
-  if (rol !== "Administrador") {
+  if (rol !== "administrador") {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       mensaje: `${rol} no es administrador`,
     });
@@ -27,7 +26,7 @@ export const esRolCoordinador = (req = request, res = response, next) => {
   }
 
   const { idUsuario, rol } = req.usuario;
-  if (rol !== "Coordinador") {
+  if (rol !== "coordinador") {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       mensaje: `${idUsuario} no es coordinador`,
     });
@@ -44,7 +43,7 @@ export const esRolJefeDepto = (req = request, res = response, next) => {
   }
 
   const { idUsuario, rol } = req.usuario;
-  if (rol !== "Jefe") {
+  if (rol !== "jefe") {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       mensaje: `${idUsuario} no es jefe de departamento`,
     });
@@ -72,7 +71,7 @@ export const esRolDocente = (req = request, res = response, next) => {
   }
 
   const { idUsuario, rol } = req.usuario;
-  if (rol !== "Docente") {
+  if (rol !== "docente") {
     return res.status(StatusCodes.UNAUTHORIZED).json({
       mensaje: `${idUsuario} no es un docente`,
     });
