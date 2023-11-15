@@ -9,7 +9,7 @@ export class ControladorDocentes {
   async crear (req = request, res = response) {
     try {
       const infoDocente = req.body
-      const docente = {...infoDocente, foto_empleado: "/src/public/uploads/" + req.file.filename}
+      const docente = {...infoDocente, foto_empleado: '/public/' + req.file.filename}
       console.log(infoDocente)
 
       const resultado = await docenteService.crear(docente)

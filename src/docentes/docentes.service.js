@@ -90,7 +90,7 @@ export class DocentesService {
         codigoEstado: StatusCodes.NOT_FOUND,
         mensaje: `No se ha podido encontrar ningun docente en la base de datos`
       }
-    }
+    } 
   
     return {
       codigoEstado: StatusCodes.OK,

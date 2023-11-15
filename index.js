@@ -2,6 +2,7 @@ import express from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
 import cors from 'cors'
+import path from 'node:path'
 
 import bodyParser from 'body-parser'
 const { json } = bodyParser
@@ -23,6 +24,9 @@ app.use(cors())
 app.use(helmet())
 app.use(morgan('tiny'))
 app.use(json())
+
+// Middleware para servir las imagenes como recursos estaticos
+app.use('/public', express.static(path.join(process.cwd(), 'src', 'public', 'uploads')))
 
 // Endpoints
 app.use('/api/v1/admin', routerAdmin)
