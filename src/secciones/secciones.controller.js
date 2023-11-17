@@ -21,4 +21,19 @@ export default class ControladorSecciones {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async aumentarCupos(req = request, res = response){
+    try {
+      const data = req.body
+      const resultado = await serviceSecciones.aumentarCupos(data)
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }

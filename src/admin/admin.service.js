@@ -17,7 +17,7 @@ export class AdminService {
     if (error) {
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
-        mensaje: `Ocurrio un error al crar una nueva configuracion del periodo: ${error.details[0].message}`,
+        mensaje: `Ocurrio un error al crear una nueva configuracion del periodo: ${error.details[0].message}`,
         token: null
       };
     }

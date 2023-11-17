@@ -1,6 +1,5 @@
 import {request, response} from 'express'
 import { StatusCodes } from "http-status-codes";
-import path from 'node:path'
 
 import ServiceAdmisiones from './admisiones.service.js';
 

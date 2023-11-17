@@ -1,8 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 
-import {fnSPGet } from '../utils/databaseFunctions.js'
+import {fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js'
 
 import createPool from "../database/database.config.js";
+import { schemaAumentarCupos } from "./secciones.schema.js";
 
 const pool = await createPool()
 
@@ -40,5 +41,32 @@ export default class ServiceSecciones{
       entidad: secciones
     };
 
+  }
+
+  async aumentarCupos(data){
+    const {error} = schemaAumentarCupos.validate(data)
+
+    if (error) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: `Ocurrio un error al aumentar cupos a una nueva seccion: ${error.details[0].message}`
+      };
+    }
+
+    const {cupos, seccion} = data
+
+    const secciones = await fnSPCUD(pool, "AGRANDAR_CUPOS", [cupos, seccion])
+
+    if (secciones.mensaje === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido encontrar ninguna seccion'
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Se aumentaros los cupos en las secciones con exito!'
+    };
   }
 }

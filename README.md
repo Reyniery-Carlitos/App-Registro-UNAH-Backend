@@ -55,6 +55,11 @@ Estructura de carpetas modular
 |     |     |--- routes
 |     |     |--- service
 |     |     |--- schema
+|     |--- asignaturas
+|     |     |--- controller
+|     |     |--- routes
+|     |     |--- service
+|     |     |--- schema
 |     |--- aspirantes
 |     |     |--- controller
 |     |     |--- routes
@@ -73,6 +78,11 @@ Estructura de carpetas modular
 |     |--- database
 |     |     |--- config
 |     |--- docentes
+|     |     |--- controller
+|     |     |--- routes
+|     |     |--- service
+|     |     |--- schema
+|     |--- edificios
 |     |     |--- controller
 |     |     |--- routes
 |     |     |--- service
@@ -157,6 +167,11 @@ Estructura de carpetas modular
     }
   ```
 
+- **Asignaturas**
+  - Obtener asignaturas por carrera (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/asignaturas/?nEmpleado=nEmpleado
+
+    nEmpleado = Un numero de empleado valido por ej: 20246001040
+
 - **Apirantes:** 
   - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
   
@@ -184,6 +199,13 @@ Estructura de carpetas modular
     dni: es una dni valida del aspirante que se quiera obtener la info por ej. 0801200100569
 
   - Descargar CSV estudiantes admitidos (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admisiones/estudiantes-admitidos
+
+- **Aulas**
+  - Obtener aulas (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/aulas/?nEmpleado=nEmpleado&edificio=idEdificio
+
+    nEmpleado = nEmpleado ; edificio = idEdificio
+
+    nEmpleado es un numero de empleado valido y edificio es un id de un edificio valido
 
 - **Carreras**
   - Obtener carreras: GET http://localhost:3001/api/v1/carreras/
@@ -227,6 +249,11 @@ Estructura de carpetas modular
 
     nEmpleado = Es un numero de empleado valido por ej. 20246001073
 
+- **Edificios**
+  - Obtener edificios (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/edificios/?nEmpleado=nEmpleado
+
+    nEmpleado es un numero de empleado valido por ej. 20246001040
+
 - **Login**: POST http://localhost:3001/api/v1/login
   ```
     {
@@ -239,9 +266,18 @@ Estructura de carpetas modular
   - Obtener roles: GET http://localhost:3001/api/v1/roles/
 
 - **Secciones**
-  - Obtener secciones por asignaturas: GET http://localhost:3001/api/v1/secciones/?cuenta=nCuenta
+  - Obtener secciones por asignaturas (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/secciones/?cuenta=nCuenta
     
     nCuenta = Un numero de cuenta valido por ej. 20246001040
+
+  - Aumentar cupos (Solo jefes de depto tienen permisos): POST http://localhost:3001/api/v1/secciones/aumentar-cupos
+
+  ```
+    {
+      "cupos": number,
+      "seccion": string
+    }
+  ```
 
 ## Tecnologias 🛠️
 ---
