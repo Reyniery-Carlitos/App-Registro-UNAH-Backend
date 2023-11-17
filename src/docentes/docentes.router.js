@@ -16,8 +16,8 @@ esRolAdmin,
 upload.single('foto_empleado'), controladorDocente.crear)
 
 routerDocentes.get('/:nEmpleado', 
-// validarJWT,
-// esRolDocente,
+validarJWT,
+esRolDocente,
 controladorDocente.obtenerDocentePorNEmpleado)
 
 routerDocentes.get('/', 

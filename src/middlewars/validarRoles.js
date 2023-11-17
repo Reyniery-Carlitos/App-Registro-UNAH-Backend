@@ -58,7 +58,6 @@ export const esRolAdminOJefe = (req = request, res = response, next) => {
       mensaje: "Se quiere verificar el rol sin validar el token primero",
     });
   }
-  console.log(req.usuario)
 
   const {usuario, rol} = req.usuario
   

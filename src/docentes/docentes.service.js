@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'
 
 import { schemaDocentes } from "./docentes.schema.js"
 import createPool from '../database/database.config.js'
-import { fnSPCUD } from '../utils/databaseFunctions.js';
+import { fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js';
 import OracleDB from "oracledb";
 
 const pool = await createPool()
@@ -44,24 +44,11 @@ export class DocentesService {
     };
   }
 
-  async obtenerDocentes(){
-    const docentes = await (await pool.getConnection()).execute(`
-      SELECT d.N_EMPLEADO, d.PERSONA_DNI, p.PRIMERNOMBRE, p.SEGUNDONOMBRE, p.PRIMERAPELLIDO, p.SEGUNDOAPELLIDO, p.CORREOELECTRONICO, p.DIRECCION, p.TELEFONO, d.FOTOEMPLEADO, r.ROL, c.NOM_CARRERA, c2.NOMBRE AS CENTRO, c2.ACRONIMO  FROM DOCENTE d 
-      INNER JOIN ROL r 
-      ON r.ID = d.ROL_ID 
-      INNER JOIN CARRERA c 
-      ON d.CAR_DISPONIBLE_ID = c.ID 
-      INNER JOIN CAR_DISPONIBLE cd
-      ON cd.CARRERA_ID = c.ID
-      INNER JOIN CENTRO c2
-      ON c2.ID = cd.CARRERA_ID
-      INNER JOIN PERSONA p 
-      ON p.DNI = d.PERSONA_DNI 
-    `, 
-    [], 
-    {outFormat: OracleDB.OUT_FORMAT_OBJECT})
+  async obtenerDocentes(nEmpleado){
+    const estructureSP = ["ID", "NOMBRE", "CENTRO"]
+    const docentes = await fnSPGet(pool, "OBTENER_DOCENTES_JEFE", estructureSP, [nEmpleado])
 
-    if (docentes.rows.length === 0) {
+    if (docentes === null) {
       return {
         codigoEstado: StatusCodes.NOT_FOUND,
         mensaje: `No se ha podido encontrar ningun docente en la base de datos`
@@ -71,7 +58,7 @@ export class DocentesService {
     return {
       codigoEstado: StatusCodes.OK,
       mensaje: 'Docentes obtenidos correctamente',
-      entidad: docentes.rows
+      entidad: docentes
     }
   }
 
