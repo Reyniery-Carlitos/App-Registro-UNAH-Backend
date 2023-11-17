@@ -56,4 +56,38 @@ export class ControladorDocentes {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async obtenerSeccionesPorDocente(req = request, res = response){
+    try {
+      const {usuario} = req.usuario
+      
+      const resultado = await docenteService.obtenerSeccionesPorDocente(usuario)
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data: resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async obtenerInfoInicioJefe(req = request, res = response) {
+    try {
+      const {usuario} = req.usuario
+      
+      const resultado = await docenteService.obtenerInfoInicioJefe(usuario)
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data: resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }

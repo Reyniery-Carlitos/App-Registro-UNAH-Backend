@@ -6,11 +6,11 @@ import { fnSPGet } from '../utils/databaseFunctions.js'
 const pool = await createPool()
 
 export default class ServiceAsignaturas{
-  async obtenerAsignaturasPorCarrera(nEmpleado){
-    console.log(nEmpleado)
+  async obtenerAsignaturasPorCarrera(usuario){
+    
     const estructureSP = ["COD", "NOMBRE"]
     
-    const asignaturas = await fnSPGet(pool, "ASIGNATURAS_CARRERA_JEFE", estructureSP, [nEmpleado])
+    const asignaturas = await fnSPGet(pool, "ASIGNATURAS_CARRERA_JEFE", estructureSP, [usuario])
 
     if (asignaturas === null){
       return {

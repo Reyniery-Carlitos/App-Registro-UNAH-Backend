@@ -87,3 +87,22 @@ export const esRolDocente = (req = request, res = response, next) => {
 
   next();
 }
+
+export const esRolDocenteOJefe = (req = request, res = response, next) => {
+  if (!req.usuario) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      mensaje: "Se quiere verificar el rol sin validar el token primero",
+    });
+  }
+
+  const {usuario, rol} = req.usuario
+  
+  if(rol === 'jefe' || rol === 'docente') {
+    
+    next()
+  } else {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      mensaje: `${rol} no es ni docente ni jefe de departamento`,
+    });
+  } 
+}

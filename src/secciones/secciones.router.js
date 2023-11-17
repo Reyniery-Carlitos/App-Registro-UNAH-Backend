@@ -12,6 +12,11 @@ validarJWT,
 esRolJefeDepto,
 controladorSecciones.aumentarCupos)
 
+seccionesRouter.post('/cancelar-seccion', 
+validarJWT,
+esRolJefeDepto,
+controladorSecciones.cancelarSeccion)
+
 seccionesRouter.get('/', 
 validarJWT,
 esRolJefeDepto,

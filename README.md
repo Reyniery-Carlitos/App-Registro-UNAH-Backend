@@ -132,35 +132,35 @@ Estructura de carpetas modular
 
     JSON con los siguientes datos
 
-  ```
-    {
-      "periodo": {
-        "p_fec_nota_ini": "MM/DD/YY hh:mm:ss",
-        "p_fec_nota_fin": "MM/DD/YY hh:mm:ss",
-        "p_periodo_periodo": number,
-        "p_periodo_anio": "YYYY",
-        "p_periodo_duracion_id": string,
-        "p_fec_ini_plan": "MM/DD/YY hh:mm:ss",
-        "p_fec_final_plan": "MM/DD/YY hh:mm:ss",
-        "p_fec_can_exp_ini": "MM/DD/YY hh:mm:ss",
-        "p_fec_can_exp_fin": "MM/DD/YY hh:mm:ss",
-        "p_fec_periodo_ini": "MM/DD/YY hh:mm:ss",
-        "p_fec_periodo_fin": "MM/DD/YY hh:mm:ss"
-      },
-      "matricula": [
-        {
-          "p_indice_inicio": number,
-          "p_indice_final": number,
-          "p_fecha_inicio": "MM/DD/YY hh:mm:ss",
-          "p_fecha_final": "MM/DD/YY hh:mm:ss",
-          "p_nombre": string,
+    ```
+      {
+        "periodo": {
+          "p_fec_nota_ini": "MM/DD/YY hh:mm:ss",
+          "p_fec_nota_fin": "MM/DD/YY hh:mm:ss",
           "p_periodo_periodo": number,
           "p_periodo_anio": "YYYY",
-          "p_periodo_duracion_id": string
-        }
-      ]
-    }
-  ```
+          "p_periodo_duracion_id": string,
+          "p_fec_ini_plan": "MM/DD/YY hh:mm:ss",
+          "p_fec_final_plan": "MM/DD/YY hh:mm:ss",
+          "p_fec_can_exp_ini": "MM/DD/YY hh:mm:ss",
+          "p_fec_can_exp_fin": "MM/DD/YY hh:mm:ss",
+          "p_fec_periodo_ini": "MM/DD/YY hh:mm:ss",
+          "p_fec_periodo_fin": "MM/DD/YY hh:mm:ss"
+        },
+        "matricula": [
+          {
+            "p_indice_inicio": number,
+            "p_indice_final": number,
+            "p_fecha_inicio": "MM/DD/YY hh:mm:ss",
+            "p_fecha_final": "MM/DD/YY hh:mm:ss",
+            "p_nombre": string,
+            "p_periodo_periodo": number,
+            "p_periodo_anio": "YYYY",
+            "p_periodo_duracion_id": string
+          }
+        ]
+      }
+    ```
 
   - Obtener info siguiente periodo (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admin/siguiente-periodo?tipoPeriodo=idPeriodo
 
@@ -170,21 +170,21 @@ Estructura de carpetas modular
 
     Formulario con los siguientes datos
 
-  ```
-    {
-      "notas_aspirantes": csv 
-    }
-  ``` 
+    ```
+      {
+        "notas_aspirantes": csv 
+      }
+    ``` 
 
   - Registrar estudiantes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/registrar-estudiantes
 
     Formulario con los siguientes datos
   
-  ```
-    {
-      "datos_estudiantes": csv
-    }
-  ```
+    ```
+      {
+        "datos_estudiantes": csv
+      }
+    ```
 
 - **Asignaturas**
   - Obtener asignaturas por carrera (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/asignaturas/
@@ -194,22 +194,22 @@ Estructura de carpetas modular
   
     Formulario con los siguientes datos
   
-  ```
-    {
-      "dni": string,
-      "primer_nombre": string,
-      "segundo_nombre": string,
-      "primer_apellido": string,
-      "segundo_apellido": string,
-      "direccion": string,
-      "correo_electronico": string,
-      "centro_id": string,
-      "carrera_principal_id": string,
-      "carrera_secundaria_id": string,
-      "telefono": string,
-      "foto_certificado": image
-    }
-  ```
+    ```
+      {
+        "dni": string,
+        "primer_nombre": string,
+        "segundo_nombre": string,
+        "primer_apellido": string,
+        "segundo_apellido": string,
+        "direccion": string,
+        "correo_electronico": string,
+        "centro_id": string,
+        "carrera_principal_id": string,
+        "carrera_secundaria_id": string,
+        "telefono": string,
+        "foto_certificado": image
+      }
+    ```
 
   - Obtener datos aspirante: GET http://localhost:3001/api/v1/apirantes/dni 
 
@@ -239,35 +239,43 @@ Estructura de carpetas modular
 - **Docentes:**
   - Crear docentes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/docentes 
 
-      Formulario con los siguientes datos
+    Formulario con los siguientes datos
   
-  ```
-    {
-      "dni": string,
-      "primer_nombre": string,
-      "segundo_nombre": string,
-      "primer_apellido": string,
-      "segundo_apellido": string,
-      "direccion": string,
-      "correo_electronico": string,
-      "rol_id": string,
-      "carrera": string,
-      "telefono": string,
-      "contrasenia": string,
-      "foto_empleado": image
-    }
-  ```
+    ```
+      {
+        "dni": string,
+        "primer_nombre": string,
+        "segundo_nombre": string,
+        "primer_apellido": string,
+        "segundo_apellido": string,
+        "direccion": string,
+        "correo_electronico": string,
+        "rol_id": string,
+        "carrera": string,
+        "telefono": string,
+        "contrasenia": string,
+        "foto_empleado": image
+      }
+    ```
 
-  - Obtener docentes (Solo administradores y jefes de departamento tienen acceso): GET http://localhost:3001/api/v1/docentes/
+  - Obtener docentes (Solo administradores y jefes de departamento tienen permisos): GET http://localhost:3001/api/v1/docentes/
 
   - Obtener docente (Solo docentes tienen acceso): GET http://localhost:3001/api/v1/docentes/nEmpleado
 
     nEmpleado = Es un numero de empleado valido por ej. 20246001073
 
+  - Obtener secciones por docente (Solo docentes tienen permisos): GET http://localhost:3001/api/v1/docentes/secciones
+
+  - Obtener info inicio Jefe (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/docentes/info-inicio-jefe
+
+
 - **Edificios**
   - Obtener edificios (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/edificios/
 
 - **Login**: POST http://localhost:3001/api/v1/login
+
+  JSON Con los siguientes datos:
+
   ```
     {
       "username": string,
@@ -279,16 +287,31 @@ Estructura de carpetas modular
   - Obtener roles: GET http://localhost:3001/api/v1/roles/
 
 - **Secciones**
-  - Obtener secciones por asignaturas (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/secciones/
+  - Obtener secciones por asignaturas (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/secciones/?codAsig=codAsig
+
+    codAsig = codigo de asignatura valido por ej. IS-210
 
   - Aumentar cupos (Solo jefes de depto tienen permisos): POST http://localhost:3001/api/v1/secciones/aumentar-cupos
 
-  ```
-    {
-      "cupos": number,
-      "seccion": string
-    }
-  ```
+    JSON Con los siguientes datos:
+
+    ```
+      {
+        "cupos": number,
+        "seccion": string
+      }
+    ```
+
+  - Cancelar seccion (Solo jefes de depto tienen permisos): POST http://localhost:3001/api/v1/secciones/cancelar-seccion/
+
+    JSON con los siguientes datos
+
+    ```
+      {
+        "idSeccion": string,
+        "justificacion": string
+      }
+    ``` 
 
 ## Tecnologias 🛠️
 ---

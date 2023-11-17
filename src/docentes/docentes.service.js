@@ -31,7 +31,6 @@ export class DocentesService {
     
     const docenteActual = await fnSPCUD(pool, "CREAR_DOCENTE", inVARS);
 
-    console.log(docenteActual.mensaje)
     if (docenteActual.mensaje === null) {
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
@@ -92,6 +91,45 @@ export class DocentesService {
       codigoEstado: StatusCodes.OK,
       mensaje: 'Docente obtenido correctamente',
       entidad: docente.rows
+    }
+  }
+
+  async obtenerSeccionesPorDocente(usuario) {
+    const estructureSP = ['ID_SECCION', 'NOMBRE_SECCION', 'NOMBRE_ASIGNATURA']
+    console.log(usuario)
+    const secciones = await fnSPGet(pool, "SECCION_DOCENTE", estructureSP, [usuario])
+
+    if (secciones === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido obtener ninguna seccion',
+        entidad: null
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Secciones por docente obtenidas con éxito!.',
+      entidad: secciones
+    }
+  }
+
+  async obtenerInfoInicioJefe(usuario){
+    const estructureSP = ["NOMBRE", "FACULTAD", "CENTRO", "CARRERA"]
+    const infoInicio = await fnSPGet(pool, "INICIO_JEFEDEPARTAMENTO", estructureSP, [usuario])
+
+    if (infoInicio === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido obtener ninguna informacion',
+        entidad: null
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Info obtenida con éxito!.',
+      entidad: infoInicio
     }
   }
 }

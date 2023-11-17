@@ -8,7 +8,8 @@ import { schemaAumentarCupos } from "./secciones.schema.js";
 const pool = await createPool()
 
 export default class ServiceSecciones{
-  async obtenerSeccionesPorAsignatura(cuenta) {
+  async obtenerSeccionesPorAsignatura({usuario, codAsig}) {
+    
     const estructureSP1 = [
       "ID" ,
       "SECCION" ,
@@ -20,7 +21,7 @@ export default class ServiceSecciones{
       "CUPOS"
      ];
 
-    const secciones = await fnSPGet(pool, "OBTENER_SECCIONES_ASIGNATURA", estructureSP1, [cuenta]);
+    const secciones = await fnSPGet(pool, "OBTENER_SECCIONES_ASIGNATURA", estructureSP1, [usuario, codAsig]);
 
     if (secciones === null) {
       return {
@@ -67,6 +68,24 @@ export default class ServiceSecciones{
     return {
       codigoEstado: StatusCodes.OK,
       mensaje: 'Se aumentaros los cupos en las secciones con exito!'
+    };
+  }
+
+  async cancelarSeccion(data) {
+    const {idSeccion, justificacion} = data
+
+    const seccion = await fnSPCUD(pool, "CANCELAR_SECCION", [idSeccion, justificacion])
+
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido realizar la solicitud de cancelacion de seccion'
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Se realizo la solicitud de cancelacion de seccion correctamente'
     };
   }
 }
