@@ -57,7 +57,6 @@ export class DocentesService {
       ON c2.ID = cd.CARRERA_ID
       INNER JOIN PERSONA p 
       ON p.DNI = d.PERSONA_DNI 
-      WHERE d.N_EMPLEADO = '20246001073'
     `, 
     [], 
     {outFormat: OracleDB.OUT_FORMAT_OBJECT})

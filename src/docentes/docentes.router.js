@@ -16,13 +16,13 @@ esRolAdmin,
 upload.single('foto_empleado'), controladorDocente.crear)
 
 routerDocentes.get('/:nEmpleado', 
-validarJWT,
-esRolDocente,
+// validarJWT,
+// esRolDocente,
 controladorDocente.obtenerDocentePorNEmpleado)
 
 routerDocentes.get('/', 
-validarJWT,
-esRolAdminOJefe,
+// validarJWT,
+// esRolAdminOJefe,
 controladorDocente.obtenerDocentes)
 
 export default routerDocentes
