@@ -99,23 +99,106 @@ Estructura de carpetas modular
 |     |     |--- routes
 |     |     |--- service
 |     |     |--- schema
+|     |--- secciones
+|     |     |--- controller
+|     |     |--- routes
+|     |     |--- service
+|     |     |--- schema
 |     |--- utils
 |     |     |--- databaseFunctions
+|     |     |--- escribir-csv
 |     |     |--- formatearFechas
 |     |     |--- generadorId
 |     |     |--- generarToken
+|     |     |--- transporter
 |-----|-----|--- leerCSV
 ```
 
 ## Pruebas API ⚔️​
 ---
-- **Login**: POST http://localhost:3001/api/v1/login
+- **Admin**
+  - Configurar periodo (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admin/configuracion-periodo
+
+    Formulario con los siguientes datos
+
   ```
     {
-      "username": string,
-      "contrasenia": string
+      "p_fec_nota_ini": "MM/DD/YY",
+      "p_fec_nota_fin": "MM/DD/YY",
+      "p_periodo_periodo": number,
+      "p_periodo_anio": "YYYY",
+      "p_periodo_duracion_id": string,
+      "p_fec_ini_plan": "MM/DD/YY",
+      "p_fec_final_plan": "MM/DD/YY",
+      "p_fec_can_exp_ini": "MM/DD/YY",
+      "p_fec_can_exp_fin": "MM/DD/YY",
+      "p_fec_periodo_ini": "MM/DD/YY",
+      "p_fec_periodo_fin": "MM/DD/YY"
     }
   ```
+- **Admisiones**
+  - Cargar notas (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/cargar-notas
+
+    Formulario con los siguientes datos
+
+  ```
+    {
+      "notas_aspirantes": csv 
+    }
+  ``` 
+
+  - Registrar estudiantes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/registrar-estudiantes
+
+    Formulario con los siguientes datos
+  
+  ```
+    {
+      "datos_estudiantes": csv
+    }
+  ```
+
+- **Apirantes:** 
+  - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
+  
+    Formulario con los siguientes datos
+  
+  ```
+    {
+      "dni": string,
+      "primer_nombre": string,
+      "segundo_nombre": string,
+      "primer_apellido": string,
+      "segundo_apellido": string,
+      "direccion": string,
+      "correo_electronico": string,
+      "centro_id": string,
+      "carrera_principal_id": string,
+      "carrera_secundaria_id": string,
+      "telefono": string,
+      "foto_certificado": image
+    }
+  ```
+
+  - Obtener datos aspirante: GET http://localhost:3001/api/v1/apirantes/dni 
+
+    dni: es una dni valida del aspirante que se quiera obtener la info por ej. 0801200100569
+
+  - Descargar CSV estudiantes admitidos (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admisiones/estudiantes-admitidos
+
+- **Carreras**
+  - Obtener carreras: GET http://localhost:3001/api/v1/carreras/
+
+  - Obtener carreras por id centro: http://localhost:3001/api/v1/carreras/?idCentro=id
+
+    id = id de un centro valido por ej. 1
+
+- **Centros**
+  - Obtener centros: GET http://localhost:3001/api/v1/centros/
+
+  - Obtener centros por id Carrera: GET http://localhost:3001/api/v1/centros/?idCarrera=id
+
+    id = id de una carrera valida por ej. 1
+
 - **Docentes:**
   - Crear docentes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/docentes 
 
@@ -144,92 +227,21 @@ Estructura de carpetas modular
 
     nEmpleado = Es un numero de empleado valido por ej. 20246001073
 
-- **Apirantes:** 
-  - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
-  
-    Formulario con los siguientes datos
-  
+- **Login**: POST http://localhost:3001/api/v1/login
   ```
     {
-      "dni": string,
-      "primer_nombre": string,
-      "segundo_nombre": string,
-      "primer_apellido": string,
-      "segundo_apellido": string,
-      "direccion": string,
-      "correo_electronico": string,
-      "centro_id": string,
-      "carrera_principal_id": string,
-      "carrera_secundaria_id": string,
-      "telefono": string,
-      "foto_certificado": image
+      "username": string,
+      "contrasenia": string
     }
   ```
-
-  - Obtener datos aspirante: GET http://localhost:3001/api/v1/apirantes/dni 
-
-    dni: es una dni valida del aspirante que se quiera obtener la info por ej. 0801200100569
-
-- **Admisiones**
-  - Cargar notas (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/cargar-notas
-
-    Formulario con los siguientes datos
-
-  ```
-    {
-      "notas_aspirantes": csv 
-    }
-  ``` 
-
-  - Registrar estudiantes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/registrar-estudiantes
-
-    Formulario con los siguientes datos
-  
-  ```
-    {
-      "datos_estudiantes": csv
-    }
-  ```
-
-  - Descargar CSV estudiantes admitidos (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admisiones/estudiantes-admitidos
-
-- **Centros**
-  - Obtener centros: GET http://localhost:3001/api/v1/centros/
-
-  - Obtener centros por id Carrera: GET http://localhost:3001/api/v1/centros/?idCarrera=id
-
-    id = id de una carrera valida por ej. 1
-
-- **Admin**
-  - Configurar periodo (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admin/configuracion-periodo
-
-    Formulario con los siguientes datos
-
-  ```
-    {
-      "p_fec_nota_ini": "MM/DD/YY",
-      "p_fec_nota_fin": "MM/DD/YY",
-      "p_periodo_periodo": number,
-      "p_periodo_anio": "YYYY",
-      "p_periodo_duracion_id": string,
-      "p_fec_ini_plan": "MM/DD/YY",
-      "p_fec_final_plan": "MM/DD/YY",
-      "p_fec_can_exp_ini": "MM/DD/YY",
-      "p_fec_can_exp_fin": "MM/DD/YY",
-      "p_fec_periodo_ini": "MM/DD/YY",
-      "p_fec_periodo_fin": "MM/DD/YY"
-    }
-  ```
-
-- **Carreras**
-  - Obtener carreras: GET http://localhost:3001/api/v1/carreras/
-
-  - Obtener carreras por id centro: http://localhost:3001/api/v1/carreras/?idCentro=id
-
-    id = id de un centro valido por ej. 1
 
 - **Roles**
   - Obtener roles: GET http://localhost:3001/api/v1/roles/
+
+- **Secciones**
+  - Obtener secciones por asignaturas: GET http://localhost:3001/api/v1/secciones/?cuenta=nCuenta
+    
+    nCuenta = Un numero de cuenta valido por ej. 20246001040
 
 ## Tecnologias 🛠️
 ---

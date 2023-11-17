@@ -15,6 +15,7 @@ import routerCentros from './src/centros/centros.router.js'
 import routerAdmisiones from './src/admisiones/admisiones.router.js'
 import routerCarreras from './src/carreras/carreras.router.js'
 import routerRoles from './src/roles/roles.router.js'
+import routerSecciones from './src/secciones/secciones.router.js'
 
 const app = express()
 const PUERTO = process.env.PORT ?? 3002
@@ -37,6 +38,7 @@ app.use('/api/v1/centros', routerCentros)
 app.use('/api/v1/admisiones', routerAdmisiones)
 app.use('/api/v1/carreras/', routerCarreras)
 app.use('/api/v1/roles', routerRoles)
+app.use('/api/v1/secciones', routerSecciones)
 
 // Listen
 app.listen(PUERTO, () => {

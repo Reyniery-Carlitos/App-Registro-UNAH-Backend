@@ -61,6 +61,13 @@ export default class ServiceAdmisiones {
       "EXAMEN_EXTRA2",
       "PUNT2"
     ] 
+
+    if(DNIJSON.length === 0) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: `Error al momento de leer informacion desde la DB`,
+      };
+    }
     
     for (let index = 0; index <DNIJSON.length ; index++) {
       const inVARS=[DNIJSON[index].DNI];

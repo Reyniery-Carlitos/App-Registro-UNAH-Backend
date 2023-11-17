@@ -35,15 +35,13 @@ export default class ServiceCarreras {
   }
 
   async obtenerCarrerasPorCentro(id) {
-    const carreras = await (await pool.getConnection()).execute(
-
-      
-      `select car_disponible.id, carrera.nom_carrera  FROM
-       CENTRO
-       INNER JOIN
-       CAR_DISPONIBLE ON CAR_DISPONIBLE.CENTRO_ID = CENTRO.ID
-       INNER JOIN
-       CARRERA ON CAR_DISPONIBLE.CARRERA_ID = CARRERA.ID where centro.id=:id
+      const carreras = await (await pool.getConnection()).execute(      
+        `SELECT car_disponible.id, carrera.nom_carrera FROM CENTRO
+        INNER JOIN CAR_DISPONIBLE
+        ON CAR_DISPONIBLE.CENTRO_ID = CENTRO.ID
+        INNER JOIN CARRERA
+        ON CAR_DISPONIBLE.CARRERA_ID = CARRERA.ID 
+        WHERE centro.id = :id
       `, 
       [id], 
       {outFormat: OracleDB.OUT_FORMAT_OBJECT}
