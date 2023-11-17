@@ -4,6 +4,7 @@ Proyecto final clase Ingenieria de software
 
 - **Catedratico:** Ing. Nestor Luque
 - **Comienzo:** 27/10/23
+- **Primera entrega:** 20/11/23
 - **Entrega del proyecto:** 06/12/23
 
 ## Acerca del proyecto 🔥​
@@ -25,9 +26,9 @@ Aplicacion backend registro de estudiantes UNAH en la cual se podra realizar un 
   - Administracion de su propio usuario
   - Ingreso de calificaciones al sistema
 - Modulo de Jefe de depto.
-  - A
+  - Ver y crear secciones para cada depto
 - Modulo de Coordinador
-  - A
+  - Acceso a la carga de cada periodo
 - Modulo de estudiantes
   - Administrar su propio usuario
   - Ver calificaciones
