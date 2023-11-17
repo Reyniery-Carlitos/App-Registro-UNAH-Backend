@@ -21,8 +21,8 @@ routerDocentes.get('/:nEmpleado',
 controladorDocente.obtenerDocentePorNEmpleado)
 
 routerDocentes.get('/', 
-// validarJWT,
-// esRolAdminOJefe,
+validarJWT,
+esRolAdminOJefe,
 controladorDocente.obtenerDocentes)
 
 export default routerDocentes
