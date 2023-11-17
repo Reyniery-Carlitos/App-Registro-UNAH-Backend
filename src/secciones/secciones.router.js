@@ -8,8 +8,8 @@ const seccionesRouter = Router()
 const controladorSecciones = new ControladorSecciones()
 
 seccionesRouter.post('/aumentar-cupos', 
-// validarJWT,
-// esRolJefeDepto,
+validarJWT,
+esRolJefeDepto,
 controladorSecciones.aumentarCupos)
 
 seccionesRouter.get('/', 

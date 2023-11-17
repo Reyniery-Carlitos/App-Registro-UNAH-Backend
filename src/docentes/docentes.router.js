@@ -8,11 +8,11 @@ import {upload} from '../middlewars/almacenarArchivo.js'
 
 const routerDocentes = Router()
 const controladorDocente = new ControladorDocentes()
-// validarJWT, esRolAdmin,
+
 // Crear nuevo docente
 routerDocentes.post('/', 
-// validarJWT, 
-// esRolAdmin, 
+validarJWT, 
+esRolAdmin, 
 upload.single('foto_empleado'), controladorDocente.crear)
 
 routerDocentes.get('/:nEmpleado', 
@@ -21,8 +21,8 @@ esRolDocente,
 controladorDocente.obtenerDocentePorNEmpleado)
 
 routerDocentes.get('/', 
-// validarJWT,
-// esRolAdminOJefe,
+validarJWT,
+esRolAdminOJefe,
 controladorDocente.obtenerDocentes)
 
 export default routerDocentes

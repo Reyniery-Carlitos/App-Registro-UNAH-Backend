@@ -129,23 +129,41 @@ Estructura de carpetas modular
 - **Admin**
   - Configurar periodo (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admin/configuracion-periodo
 
-    Formulario con los siguientes datos
+    JSON con los siguientes datos
 
   ```
     {
-      "p_fec_nota_ini": "MM/DD/YY",
-      "p_fec_nota_fin": "MM/DD/YY",
-      "p_periodo_periodo": number,
-      "p_periodo_anio": "YYYY",
-      "p_periodo_duracion_id": string,
-      "p_fec_ini_plan": "MM/DD/YY",
-      "p_fec_final_plan": "MM/DD/YY",
-      "p_fec_can_exp_ini": "MM/DD/YY",
-      "p_fec_can_exp_fin": "MM/DD/YY",
-      "p_fec_periodo_ini": "MM/DD/YY",
-      "p_fec_periodo_fin": "MM/DD/YY"
+      "periodo": {
+        "p_fec_nota_ini": "MM/DD/YY hh:mm:ss",
+        "p_fec_nota_fin": "MM/DD/YY hh:mm:ss",
+        "p_periodo_periodo": number,
+        "p_periodo_anio": "YYYY",
+        "p_periodo_duracion_id": string,
+        "p_fec_ini_plan": "MM/DD/YY hh:mm:ss",
+        "p_fec_final_plan": "MM/DD/YY hh:mm:ss",
+        "p_fec_can_exp_ini": "MM/DD/YY hh:mm:ss",
+        "p_fec_can_exp_fin": "MM/DD/YY hh:mm:ss",
+        "p_fec_periodo_ini": "MM/DD/YY hh:mm:ss",
+        "p_fec_periodo_fin": "MM/DD/YY hh:mm:ss"
+      },
+      "matricula": [
+        {
+          "p_indice_inicio": number,
+          "p_indice_final": number,
+          "p_fecha_inicio": "MM/DD/YY hh:mm:ss",
+          "p_fecha_final": "MM/DD/YY hh:mm:ss",
+          "p_nombre": string,
+          "p_periodo_periodo": number,
+          "p_periodo_anio": "YYYY",
+          "p_periodo_duracion_id": string
+        }
+      ]
     }
   ```
+
+  - Obtener info siguiente periodo (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admin/siguiente-periodo?tipoPeriodo=idPeriodo
+
+    idPeriodo = id de un periodo valido por ej. 1
 - **Admisiones**
   - Cargar notas (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/cargar-notas
 
