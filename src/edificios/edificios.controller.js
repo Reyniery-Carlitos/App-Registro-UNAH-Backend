@@ -8,9 +8,9 @@ const serviceEdificios = new ServiceEdificios()
 export default class ControladorEdificios {
   async obtenerEdificios(req = request, res = response){
     try {
-      const nEmpleado = req.query.nEmpleado
+      const {usuario} = req.usuario
       
-      const resultado = await serviceEdificios.obtenerEdificios(nEmpleado)
+      const resultado = await serviceEdificios.obtenerEdificios(usuario)
 
       res
       .status(resultado.codigoEstado)

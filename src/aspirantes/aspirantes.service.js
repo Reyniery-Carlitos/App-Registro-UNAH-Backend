@@ -20,18 +20,6 @@ export class AspirantesService{
 
     const {telefono, dni, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, foto_certificado, centro_id, carrera_principal_id, carrera_secundaria_id} = aspirante 
     
-    // const estructureSP = ['DNI', 'Centro', 'Nombre', 'Direccion', 'Correo', 'Telefono', 'PRIMERA_CARRERA', 'NOTA_APROBATORIA', 'SEGUNDA_CARRERA', 'NOTA_APROBATORIA2', 'PAA', 'EXAMEN_EXTRA1', 'EXAMEN_EXTRA2']
-
-    // let inVARS = [dni]
-    // const existeUsuario = await fnSPGet(pool, "OBTENER_DATOS_ASPIRANTE", estructureSP, inVARS)
-
-    // if (existeUsuario) {
-    //   return {
-    //     codigoEstado: StatusCodes.BAD_REQUEST,
-    //     mensaje: `Ya existe un aspirante con el dni: ${dni}`
-    //   }  
-    // }
-    
     const inVARS = [dni, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, direccion, correo_electronico, foto_certificado, centro_id, carrera_principal_id, carrera_secundaria_id, telefono]
     
     const aspiranteActual = await fnSPCUD(pool, "CREAR_ASPIRANTE", inVARS);

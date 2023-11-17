@@ -8,9 +8,10 @@ const serviceAulas = new ServiceAulas()
 export default class ControladorAulas{
   async obtenerAulas(req = request, res = response) {
     try {
-      const {nEmpleado, edificio} = req.query 
+      const {edificio} = req.query
+      const {usuario} = req.usuario 
       
-      const resultado = await serviceAulas.obtenerAulas({nEmpleado, edificio})
+      const resultado = await serviceAulas.obtenerAulas({nEmpleado: usuario, edificio})
 
       res
       .status(resultado.codigoEstado)

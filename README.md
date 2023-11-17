@@ -187,9 +187,7 @@ Estructura de carpetas modular
   ```
 
 - **Asignaturas**
-  - Obtener asignaturas por carrera (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/asignaturas/?nEmpleado=nEmpleado
-
-    nEmpleado = Un numero de empleado valido por ej: 20246001040
+  - Obtener asignaturas por carrera (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/asignaturas/
 
 - **Apirantes:** 
   - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
@@ -220,11 +218,9 @@ Estructura de carpetas modular
   - Descargar CSV estudiantes admitidos (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admisiones/estudiantes-admitidos
 
 - **Aulas**
-  - Obtener aulas (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/aulas/?nEmpleado=nEmpleado&edificio=idEdificio
+  - Obtener aulas (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/aulas/?edificio=idEdificio
 
-    nEmpleado = nEmpleado ; edificio = idEdificio
-
-    nEmpleado es un numero de empleado valido y edificio es un id de un edificio valido
+    idEdificio es un id de un edificio valido
 
 - **Carreras**
   - Obtener carreras: GET http://localhost:3001/api/v1/carreras/
@@ -262,18 +258,14 @@ Estructura de carpetas modular
     }
   ```
 
-  - Obtener docentes (Solo administradores y jefes de departamento tienen acceso): GET http://localhost:3001/api/v1/docentes/?nEmpleado=nEmpleado
-
-    nEmpleado = Un numero de empleado valido de un jefe de depto por ej. 20246001100
+  - Obtener docentes (Solo administradores y jefes de departamento tienen acceso): GET http://localhost:3001/api/v1/docentes/
 
   - Obtener docente (Solo docentes tienen acceso): GET http://localhost:3001/api/v1/docentes/nEmpleado
 
     nEmpleado = Es un numero de empleado valido por ej. 20246001073
 
 - **Edificios**
-  - Obtener edificios (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/edificios/?nEmpleado=nEmpleado
-
-    nEmpleado es un numero de empleado valido por ej. 20246001040
+  - Obtener edificios (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/edificios/
 
 - **Login**: POST http://localhost:3001/api/v1/login
   ```
@@ -287,9 +279,7 @@ Estructura de carpetas modular
   - Obtener roles: GET http://localhost:3001/api/v1/roles/
 
 - **Secciones**
-  - Obtener secciones por asignaturas (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/secciones/?cuenta=nCuenta
-    
-    nCuenta = Un numero de cuenta valido por ej. 20246001040
+  - Obtener secciones por asignaturas (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/secciones/
 
   - Aumentar cupos (Solo jefes de depto tienen permisos): POST http://localhost:3001/api/v1/secciones/aumentar-cupos
 

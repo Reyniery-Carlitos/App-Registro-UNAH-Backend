@@ -26,8 +26,8 @@ export class ControladorDocentes {
 
   async obtenerDocentes(req = request, res = response) {
     try {
-      const nEmpleado = req.query.nEmpleado
-      const resultado = await docenteService.obtenerDocentes(nEmpleado)
+      const {usuario} = req.usuario
+      const resultado = await docenteService.obtenerDocentes(usuario)
 
       res
         .status(resultado.codigoEstado)

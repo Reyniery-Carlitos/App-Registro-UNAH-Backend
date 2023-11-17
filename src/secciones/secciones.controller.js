@@ -8,8 +8,8 @@ const serviceSecciones = new ServiceSecciones()
 export default class ControladorSecciones {
   async obtenerSeccionesPorAsignatura(req = request, res = response) {
     try {
-      const cuenta = req.query.cuenta
-      const resultado = await serviceSecciones.obtenerSeccionesPorAsignatura(cuenta)
+      const {usuario} = req.usuario
+      const resultado = await serviceSecciones.obtenerSeccionesPorAsignatura(usuario)
 
       res
         .status(resultado.codigoEstado)

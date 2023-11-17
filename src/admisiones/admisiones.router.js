@@ -9,8 +9,8 @@ const routerAdmisiones = Router()
 const controladorAdmisiones = new ControladorAdmisiones()
 
 routerAdmisiones.post('/cargar-notas', 
-  // validarJWT,
-  // esRolAdmin,
+  validarJWT,
+  esRolAdmin,
   function (req, res, next){
     uploadCsv.single('notas_aspirantes')(req, res, function(err) {
       if (err) {
@@ -24,8 +24,8 @@ routerAdmisiones.post('/cargar-notas',
 )
 
 routerAdmisiones.post('/registrar-estudiantes', 
-  validarJWT,
-  esRolAdmin,
+  // validarJWT,
+  // esRolAdmin,
   function (req, res, next){
     uploadCsv.single('datos_estudiantes')(req, res, function(err) {
       if (err) {
@@ -39,8 +39,8 @@ routerAdmisiones.post('/registrar-estudiantes',
 )
 
 routerAdmisiones.get('/estudiantes-admitidos', 
-  // validarJWT,
-  // esRolAdmin, 
+  validarJWT,
+  esRolAdmin, 
   controladorAdmisiones.obtenerCsvAspirantesAprobados
 )
 

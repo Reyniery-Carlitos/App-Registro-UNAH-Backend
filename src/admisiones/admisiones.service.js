@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import path from 'node:path'
+import bcrypt from 'bcrypt'
 
 import { fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js';
 import { leerCSV } from '../utils/leerCSV.js';
@@ -7,6 +8,7 @@ import createPool from '../database/database.config.js';
 import crearCsv from '../utils/escribir-csv.js';
 import transporter from '../utils/transporter.js';
 // import { createTransport } from "nodemailer";
+import generarContraAleatoria from '../utils/generarContraAleatoria.js';
 
 const pool = await createPool()
 
@@ -129,11 +131,16 @@ export default class ServiceAdmisiones {
     await leerCSV(rutaArchivo)
       .then(async (data) => {
         for (let item of data) {
-          const { DESCRIPCION, PERSONA_DNI, CAR_DISPONIBLE_ID } = item;
+          const { DNI, PRIORIDAD } = item;
+          const contraseniaTemp = generarContraAleatoria(8)
+
+          const salt = await bcrypt.genSalt(10)
+          const CONTRASENIA = await bcrypt.hash(contraseniaTemp, salt)
+
           const estudianteActual = await fnSPCUD(pool, "INGRESAR_ESTUDIANTE", [
-            DESCRIPCION,
-            PERSONA_DNI,
-            +CAR_DISPONIBLE_ID,
+            DNI,
+            PRIORIDAD,
+            CONTRASENIA
           ]);
 
           if (estudianteActual === null) {
@@ -142,6 +149,25 @@ export default class ServiceAdmisiones {
               mensaje: `Error en el CSV de datos`,
             };
           }
+
+          const cuenta = estudianteActual.mensaje.split(' ')[0]
+          const correo = estudianteActual.mensaje.split(' ')[1]
+
+          let mailOptions = {
+            from: 'unahproyecto6@gmail.com',
+            to: correo,
+            subject: 'Informacion acceso al registro UNAH',
+            text: `Cuenta: ${cuenta} - Contrasenia: ${contraseniaTemp}`
+          };
+
+          await transporter.sendMail(mailOptions, function(err, data) {
+            if (err) {
+              console.log("Error " + err);
+            } else {
+              console.log("Email sent successfully");
+            }
+          });
+
         }
       })
 

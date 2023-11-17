@@ -8,9 +8,9 @@ const serviceAsignaturas = new ServiceAsignaturas()
 export default class ControladorAsignaturas{
   async obtenerAsignaturasPorCarrera(req = request, res = response){
     try{
-      const nEmpleado = req.query.nEmpleado
-      console.log(nEmpleado)
-      const resultado = await serviceAsignaturas.obtenerAsignaturasPorCarrera(nEmpleado)
+      const {usuario} = req.usuario
+      
+      const resultado = await serviceAsignaturas.obtenerAsignaturasPorCarrera(usuario)
 
       res
       .status(resultado.codigoEstado)

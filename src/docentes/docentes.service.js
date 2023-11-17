@@ -1,10 +1,11 @@
 import { StatusCodes } from "http-status-codes";
 import bcrypt from 'bcrypt'
+import OracleDB from "oracledb";
 
 import { schemaDocentes } from "./docentes.schema.js"
 import createPool from '../database/database.config.js'
 import { fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js';
-import OracleDB from "oracledb";
+
 
 const pool = await createPool()
 
