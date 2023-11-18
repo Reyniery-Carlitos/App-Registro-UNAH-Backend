@@ -2,9 +2,10 @@ import { StatusCodes } from "http-status-codes";
 import bcrypt from 'bcrypt'
 import OracleDB from "oracledb";
 
-import { schemaDocentes } from "./docentes.schema.js"
+import { schemaDocentes, schemaNotasEstudiantes } from "./docentes.schema.js"
 import createPool from '../database/database.config.js'
 import { fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js';
+import transporter from '../utils/transporter.js';
 
 
 const pool = await createPool()
@@ -132,4 +133,68 @@ export class DocentesService {
       entidad: infoInicio
     }
   }
+
+  async obtenerEstudiantesPorSeccion(seccion) {
+    const estructureSP = ['N_CUENTA','NOMBRE_COMPLETO','CORREO']
+
+    const secciones = await fnSPGet(pool, "ESTUDIANTES_SECCION", estructureSP, [seccion])
+
+    if (secciones === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido obtener ningun estudiante',
+        entidad: null
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Estudiantes Obtenidos con exito',
+      entidad: secciones
+    }
+  }
+
+  async ingresarNotaPorDocente(infoNotas) {
+   
+    const {error} = schemaNotasEstudiantes.validate(infoNotas)
+
+    if (error !== undefined) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: `Ocurrio un error al crear un nuevo docente: ${error.details[0].message}`,
+        token: null
+      };
+    }
+
+    const{correo_electronico,nota,cuenta,seccion}=infoNotas;
+    const inVARS =[nota,cuenta,seccion];
+    const NOTAS = await fnSPCUD(pool, "INGRESAR_NOTA", inVARS);
+
+    if (NOTAS.mensaje === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido ingresar las notas'
+      }
+    }else{
+    let  mailOptions = {
+        from: 'unahproyecto6@gmail.com',
+        to: correo_electronico,
+        subject: 'NOTIFICACION',
+        text: '\n\n UN DOCENTE YA HA INGRESADO SU NOTA AL SISTEMA'
+      };
+    await transporter.sendMail(mailOptions, function(err, data) {
+      if (err) {
+        console.log("Error " + err);
+      } else {
+        console.log("Email sent successfully");
+      }
+    });
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: NOTAS.mensaje
+    }
+  }
+
 }
