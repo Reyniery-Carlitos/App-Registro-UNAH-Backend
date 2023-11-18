@@ -14,3 +14,11 @@ export const schemaDocentes = Joi.object({
   carrera: Joi.string().min(1).required(),
   contrasenia: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{8,40}$')).required()
 })
+
+
+export const schemaNotasEstudiantes = Joi.object({
+ correo_electronico: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'hn']}}),
+ nota: Joi.number().required(),
+ cuenta: Joi.string().min(10).max(11).required(),
+ seccion: Joi.string().min(1).max(15).required()
+})
