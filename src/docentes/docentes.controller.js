@@ -90,4 +90,37 @@ export class ControladorDocentes {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async obtenerEstudiantesPorSeccion(req = request, res = response) {
+    try {
+      const seccion = req.query.seccionID
+      
+      const resultado = await docenteService.obtenerEstudiantesPorSeccion(seccion)
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data: resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async ingresarNotasPorDocente(req = request, res = response) {
+    try {
+      const infoNotas= req.body;
+      
+      const resultado = await docenteService.ingresarNotaPorDocente(infoNotas);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }
