@@ -6,6 +6,24 @@ import ServiceSecciones from "./secciones.service.js";
 const serviceSecciones = new ServiceSecciones()
 
 export default class ControladorSecciones {
+
+  async crearSeccion(req = request, res = response) {
+    try {
+      const {usuario} = req.usuario
+      const infoSeccion = req.body
+      const resultado = await serviceSecciones.crearSeccion(usuario,infoSeccion)
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+
   async obtenerSeccionesPorAsignatura(req = request, res = response) {
     try {
       const {usuario} = req.usuario
