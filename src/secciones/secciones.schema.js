@@ -1,14 +1,20 @@
 import Joi from "joi";
 
-const schemaSecciones = Joi.object({
-  id_seccion: Joi.string().length(8).required(),
-  nombre_seccion: Joi.string().min(3).max(5).required(),
-  hora_entrada: Joi.string().min(3).max(10).required(),
-  hora_salida: Joi.string().min(3).max(10).required(),
+export const schemaSecciones = Joi.object({
+  asignatura_cod: Joi.string().min(1).max(12).required(),
+  docente_n_empleado: Joi.string().min(10).max(11).required(),
+  lunes: Joi.number().required(),
+  martes: Joi.number().required(),
+  miercoles: Joi.number().required(),
+  jueves: Joi.number().required(),
+  viernes: Joi.number().required(),
+  sabado: Joi.number().required(),
+  domingo: Joi.number().required(),
+  hora_entrada: Joi.string().min(1).max(10).required(),
+  hora_salida: Joi.string().min(1).max(10).required(),
+  aula_id: Joi.string().min(1).max(8).required(),
   cupos: Joi.number().required(),
-  anio: Joi.string().length(4).required(),
-  periodo: Joi.string().min(1).max(20).required(),
-  dias_seccion_id_dias: Joi.string().length(8).required()
+  duracion: Joi.string().min(1).max(2).required(),
 })
 
 export const schemaAumentarCupos = Joi.object({
