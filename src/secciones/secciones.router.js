@@ -22,4 +22,11 @@ validarJWT,
 esRolJefeDepto,
 controladorSecciones.obtenerSeccionesPorAsignatura)
 
+
+seccionesRouter.post('/crear', 
+validarJWT,
+esRolJefeDepto,
+controladorSecciones.crearSeccion)
+
+
 export default seccionesRouter
