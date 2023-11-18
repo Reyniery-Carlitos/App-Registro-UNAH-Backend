@@ -19,10 +19,20 @@ validarJWT,
 esRolDocenteOJefe,
 controladorDocente.obtenerSeccionesPorDocente)
 
+routerDocentes.get('/estudiantes', 
+validarJWT,
+esRolDocenteOJefe,
+controladorDocente.obtenerEstudiantesPorSeccion)
+
 routerDocentes.get('/info-inicio-jefe', 
 validarJWT,
 esRolJefeDepto,
 controladorDocente.obtenerInfoInicioJefe)
+
+routerDocentes.post('/notas', 
+validarJWT,
+esRolDocenteOJefe,
+controladorDocente.ingresarNotasPorDocente)
 
 routerDocentes.get('/:nEmpleado', 
 validarJWT,
