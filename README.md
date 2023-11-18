@@ -264,11 +264,35 @@ Estructura de carpetas modular
 
     nEmpleado = Es un numero de empleado valido por ej. 20246001073
 
+  - Obtener info inicio Jefe (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/docentes/info-inicio-
+
   - Obtener secciones por docente (Solo docentes tienen permisos): GET http://localhost:3001/api/v1/docentes/secciones
+  
+  - Obtener estudiantes del docente por seccion(permiso de docente): GET http://localhost:3001/api/v1/docentes/estudiantes/?seccionID=seccionID
+    (un ejemplo que funciona es seccionID=40)
 
-  - Obtener info inicio Jefe (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/docentes/info-inicio-jefe
+  - Ingresar notas de estudiante(permiso de docente): POST http://localhost:3001/api/v1/docentes/notas
+    JSON de ejemplo de ingresar notas.
+   
+    ```
+     {
+     "correo_electronico":"luisglainezw001@gmail.com" ,
+     "nota":100,
+     "cuenta":"20241001103",
+     "seccion": "40"
+     }
+    ```
+    datos de los JSON
 
-
+    ```
+     {
+     "correo_electronico": string ,
+     "nota":number,
+     "cuenta": string,
+     "seccion": string
+     }
+    ```
+    
 - **Edificios**
   - Obtener edificios (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/edificios/
 
