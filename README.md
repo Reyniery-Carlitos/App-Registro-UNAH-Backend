@@ -313,6 +313,47 @@ Estructura de carpetas modular
       }
     ``` 
 
+  - Crear secciones (Solo jefes de depto tienen permisos): POST http://localhost:3001/api/v1/secciones/crear
+    
+    UN EJEMPLO CON LOS DATOS(No usar estos mismos por que les devolvera que hay traslape)
+  ```
+  {
+  "asignatura_cod": "IS-110",
+  "docente_n_empleado": "20246001040",
+  "lunes": 0,
+  "martes": 0,
+  "miercoles": 0,
+  "jueves": 0,
+  "viernes": 1,
+  "sabado": 0,
+  "domingo":0,
+  "hora_entrada": "11",
+  "hora_salida": "12",
+  "aula_id": "2",
+  "cupos": 25,
+  "duracion": "2"
+  }
+  ```
+  EL JSON en cuestion con los tipos de datos(Para los dias de la semana solo usar 1s y 0s significa verdadero y falso, en caso de la duracion "1" y "2" 1 para trimestral 2 para semestral)
+  ```
+  {
+  "asignatura_cod": string,
+  "docente_n_empleado": string,
+  "lunes": integer,
+  "martes": integer,
+  "miercoles": integer,
+  "jueves": integer,
+  "viernes": integer,
+  "sabado": integer,
+  "domingo":integer,
+  "hora_entrada": string,
+  "hora_salida": string,
+  "aula_id": string,
+  "cupos": integer,
+  "duracion": string
+  }
+  ``` 
+
 ## Tecnologias 🛠️
 ---
 
