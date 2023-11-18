@@ -4,10 +4,46 @@ import {fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js'
 
 import createPool from "../database/database.config.js";
 import { schemaAumentarCupos } from "./secciones.schema.js";
+import { schemaSecciones } from "./secciones.schema.js"
 
 const pool = await createPool()
 
 export default class ServiceSecciones{
+
+
+  async crearSeccion (usuario,seccion) {
+    const {error} = schemaSecciones.validate(seccion)
+   
+
+
+    if (error !== undefined) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: `Ocurrio un error al crear la seccion: ${error.details[0].message}`,
+        token: null
+      };
+    }
+    
+    const { asignatura_cod,docente_n_empleado,lunes,martes,miercoles,jueves,viernes,sabado,domingo,hora_entrada,hora_salida ,aula_id,cupos,duracion} = seccion
+    const inVARS = [usuario,asignatura_cod,docente_n_empleado,lunes,martes,miercoles,jueves,viernes,sabado,domingo,hora_entrada,hora_salida ,aula_id,cupos,duracion]
+    
+    const seccionActual = await fnSPCUD(pool, "CREAR_SECCIONES", inVARS);
+
+    if (seccionActual.mensaje === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido crear la seccion'
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: seccionActual.mensaje
+    };
+  }
+
+
+  
   async obtenerSeccionesPorAsignatura({usuario, codAsig}) {
     
     const estructureSP1 = [
