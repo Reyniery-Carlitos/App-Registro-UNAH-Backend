@@ -19,6 +19,7 @@ import routerSecciones from './src/secciones/secciones.router.js'
 import routerAsignaturas from './src/asignaturas/asignaturas.router.js'
 import routerEdificios from './src/edificios/edificios.router.js'
 import routerAulas from './src/aulas/aulas.router.js'
+import routerEstudiantes from './src/estudiantes/estudiantes.router.js'
 
 const app = express()
 const PUERTO = process.env.PORT ?? 3002
@@ -45,6 +46,7 @@ app.use('/api/v1/secciones', routerSecciones)
 app.use('/api/v1/asignaturas', routerAsignaturas)
 app.use('/api/v1/edificios/', routerEdificios)
 app.use('/api/v1/aulas', routerAulas)
+app.use('/api/v1/estudiante', routerEstudiantes)
 
 // Listen
 app.listen(PUERTO, () => {
