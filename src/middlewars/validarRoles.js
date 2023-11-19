@@ -106,3 +106,20 @@ export const esRolDocenteOJefe = (req = request, res = response, next) => {
     });
   } 
 }
+
+export const esRolEstudiante = (req = request, res = response, next) => {
+  if (!req.usuario) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      mensaje: "Se quiere verificar el rol sin validar el token primero",
+    });
+  }
+
+  const { rol } = req.usuario;
+  if (rol !== "estudiante") {
+    return res.status(StatusCodes.UNAUTHORIZED).json({
+      mensaje: `${rol} no es estudiante`,
+    });
+  }
+
+  next();
+};
