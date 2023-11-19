@@ -46,7 +46,7 @@ export default class ServiceSecciones{
   
   async obtenerSeccionesPorAsignatura({usuario, codAsig}) {
     
-    const estructureSP1 = [
+   const estructureSP1 = [
       "ID" ,
       "SECCION" ,
       "DOCENTE" ,
@@ -54,7 +54,14 @@ export default class ServiceSecciones{
       "AULA",
       "HORA_INICIO",
       "HORA_FINAL" ,
-      "CUPOS"
+      "CUPOS",
+      "LU",
+      "MA",
+      "MI",
+      "JU",
+      "VI",
+      "SA",
+      "DO"
      ];
 
     const secciones = await fnSPGet(pool, "OBTENER_SECCIONES_ASIGNATURA", estructureSP1, [usuario, codAsig]);
