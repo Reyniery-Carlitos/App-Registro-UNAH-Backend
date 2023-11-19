@@ -120,6 +120,7 @@ export default class ServiceAdmisiones {
   }
 
   async registrarEstudiantes(nombreArchivo) {
+    let pruebas;
     const rutaArchivo = path.join(
       process.cwd(),
       "src",
@@ -138,11 +139,12 @@ export default class ServiceAdmisiones {
           const CONTRASENIA = await bcrypt.hash(contraseniaTemp, salt)
 
           const estudianteActual = await fnSPCUD(pool, "INGRESAR_ESTUDIANTE", [
-            DNI,
-            PRIORIDAD,
+            DNI.toString(),
+            PRIORIDAD.toString(),
             CONTRASENIA
           ]);
 
+           pruebas=DNI +" " + PRIORIDAD +" "+ CONTRASENIA;
           if (estudianteActual === null) {
             return {
               codigoEstado: StatusCodes.BAD_REQUEST,
@@ -180,7 +182,7 @@ export default class ServiceAdmisiones {
 
     return {
       codigoEstado: StatusCodes.OK,
-      mensaje: `Estudiantes registrados correctamente`,
+      mensaje: pruebas,
     };
   }
 
