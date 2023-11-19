@@ -376,7 +376,37 @@ Estructura de carpetas modular
   "cupos": integer,
   "duracion": string
   }
-  ``` 
+  ```
+
+ - **Estudiantes**
+ - Funcionan siempre que se envie el token, no se ocupa enviar la cuenta del estudiante
+  - Obtener Clases,Secciones y Docentes a los que evaluar(Paso anterior para luego evaluar): GET http://localhost:3001/api/v1/estudiante/secciones
+  - Evaluar Docentes : POST  http://localhost:3001/api/v1/estudiante/evaluacion
+    JSON de Ejemplo(no se ocupa enviar al docente porque se hace la conexion con el por medio de la seccion en la base)
+
+     ```
+      {
+      "id_seccion": "40",
+      "observaciones": "Ese docente deja mucho trabajo",
+      "area_personal":2 ,
+      "area_profesional": 5,
+      "area_academico":3 
+     }
+    ```
+
+     JSON con los tipos de datos( los numeros estan restringidos del 1 al 5)
+    
+    ```
+      {
+      "id_seccion": string,
+      "observaciones": string,
+      "area_personal":number ,
+      "area_profesional": number,
+      "area_academico":number 
+     }
+    ```
+
+    - Obtener notas del estudiante(luego de haber evaluado al docente): GET http://localhost:3001/api/v1/estudiante/notas
 
 ## Tecnologias 🛠️
 ---
