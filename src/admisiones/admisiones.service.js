@@ -120,7 +120,6 @@ export default class ServiceAdmisiones {
   }
 
   async registrarEstudiantes(nombreArchivo) {
-    let pruebas;
     const rutaArchivo = path.join(
       process.cwd(),
       "src",
@@ -139,12 +138,11 @@ export default class ServiceAdmisiones {
           const CONTRASENIA = await bcrypt.hash(contraseniaTemp, salt)
 
           const estudianteActual = await fnSPCUD(pool, "INGRESAR_ESTUDIANTE", [
-            DNI.toString(),
-            PRIORIDAD.toString(),
+            DNI,
+            PRIORIDAD,
             CONTRASENIA
           ]);
 
-           pruebas=DNI +" " + PRIORIDAD +" "+ CONTRASENIA;
           if (estudianteActual === null) {
             return {
               codigoEstado: StatusCodes.BAD_REQUEST,
@@ -169,20 +167,19 @@ export default class ServiceAdmisiones {
               console.log("Email sent successfully");
             }
           });
-
         }
       })
 
       .catch((err) => {
         return {
           codigoEstado: StatusCodes.BAD_REQUEST,
-          mensaje: `Error al leer CSV`,
+          mensaje: `Error al leer CSV ${err}`,
         };
       });
 
     return {
       codigoEstado: StatusCodes.OK,
-      mensaje: pruebas,
+      mensaje: 'Estudiantes registrados correctamente'
     };
   }
 
