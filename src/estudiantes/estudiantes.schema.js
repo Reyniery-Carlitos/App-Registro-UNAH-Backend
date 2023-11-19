@@ -8,3 +8,13 @@ const schemaEstudiantes = Joi.object({
   contrasenia: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{8,40}$')).required(),
   descripcion: Joi.string().max(200).required(),
 })
+
+
+export  const schemaEvaluacionDocente = Joi.object({
+  id_seccion: Joi.string().min(1).max(15).required(),
+  observaciones: Joi.string().min(1).max(200).required(),
+  area_personal: Joi.number().required(),
+  area_profesional: Joi.number().required(),
+  area_academico: Joi.number().required(),
+})
+
