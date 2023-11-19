@@ -32,6 +32,8 @@ app.use(json())
 
 // Middleware para servir las imagenes como recursos estaticos
 app.use('/public', express.static(path.join(process.cwd(), 'src', 'public', 'uploads')))
+app.use('/public/csv', express.static(path.join(process.cwd(), 'src', 'public', 'csv')))
+
 
 // Endpoints
 app.use('/api/v1/admin', routerAdmin)

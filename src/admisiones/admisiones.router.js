@@ -24,8 +24,8 @@ routerAdmisiones.post('/cargar-notas',
 )
 
 routerAdmisiones.post('/registrar-estudiantes', 
-  // validarJWT,
-  // esRolAdmin,
+  validarJWT,
+  esRolAdmin,
   function (req, res, next){
     uploadCsv.single('datos_estudiantes')(req, res, function(err) {
       if (err) {

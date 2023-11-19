@@ -1,6 +1,8 @@
 # App-Registro-UNAH-Backend v1.0.0 💯​
+
 ---
-Proyecto final clase Ingenieria de software 
+
+Proyecto final clase Ingenieria de software
 
 - **Catedratico:** Ing. Nestor Luque
 - **Comienzo:** 27/10/23
@@ -8,11 +10,13 @@ Proyecto final clase Ingenieria de software
 - **Entrega del proyecto:** 06/12/23
 
 ## Acerca del proyecto 🔥​
+
 ---
 
 Aplicacion backend registro de estudiantes UNAH en la cual se podra realizar un proceso de admision, registro de estudiantes al sistema, administracion de planificacion academica, etc.
 
 ## Descripcion ​💥​
+
 ---
 
 - Login
@@ -40,6 +44,7 @@ Aplicacion backend registro de estudiantes UNAH en la cual se podra realizar un 
   - Ver si aprobo o reprobo en su proceso de admision
 
 ## Estructuras de carpetas ​👀​
+
 ---
 
 Estructura de carpetas modular
@@ -126,8 +131,11 @@ Estructura de carpetas modular
 ```
 
 ## Pruebas API ⚔️​
+
 ---
+
 - **Admin**
+
   - Configurar periodo (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admin/configuracion-periodo
 
     JSON con los siguientes datos
@@ -165,21 +173,23 @@ Estructura de carpetas modular
   - Obtener info siguiente periodo (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admin/siguiente-periodo?tipoPeriodo=idPeriodo
 
     idPeriodo = id de un periodo valido por ej. 1
+
 - **Admisiones**
+
   - Cargar notas (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/cargar-notas
 
     Formulario con los siguientes datos
 
     ```
       {
-        "notas_aspirantes": csv 
+        "notas_aspirantes": csv
       }
-    ``` 
+    ```
 
   - Registrar estudiantes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/admisiones/registrar-estudiantes
 
     Formulario con los siguientes datos
-  
+
     ```
       {
         "datos_estudiantes": csv
@@ -187,13 +197,15 @@ Estructura de carpetas modular
     ```
 
 - **Asignaturas**
+
   - Obtener asignaturas por carrera (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/asignaturas/
 
-- **Apirantes:** 
+- **Apirantes:**
+
   - Crear aspirantes (Registrarse como aspirante): POST http://localhost:3001/api/v1/apirantes
-  
+
     Formulario con los siguientes datos
-  
+
     ```
       {
         "dni": string,
@@ -211,18 +223,20 @@ Estructura de carpetas modular
       }
     ```
 
-  - Obtener datos aspirante: GET http://localhost:3001/api/v1/apirantes/dni 
+  - Obtener datos aspirante: GET http://localhost:3001/api/v1/apirantes/dni
 
     dni: es una dni valida del aspirante que se quiera obtener la info por ej. 0801200100569
 
   - Descargar CSV estudiantes admitidos (Solo administradores tienen permisos): GET http://localhost:3001/api/v1/admisiones/estudiantes-admitidos
 
 - **Aulas**
+
   - Obtener aulas (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/aulas/?edificio=idEdificio
 
     idEdificio es un id de un edificio valido
 
 - **Carreras**
+
   - Obtener carreras: GET http://localhost:3001/api/v1/carreras/
 
   - Obtener carreras por id centro: http://localhost:3001/api/v1/carreras/?idCentro=id
@@ -230,6 +244,7 @@ Estructura de carpetas modular
     id = id de un centro valido por ej. 1
 
 - **Centros**
+
   - Obtener centros: GET http://localhost:3001/api/v1/centros/
 
   - Obtener centros por id Carrera: GET http://localhost:3001/api/v1/centros/?idCarrera=id
@@ -237,10 +252,11 @@ Estructura de carpetas modular
     id = id de una carrera valida por ej. 1
 
 - **Docentes:**
-  - Crear docentes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/docentes 
+
+  - Crear docentes (Solo administradores tienen permisos): POST http://localhost:3001/api/v1/docentes
 
     Formulario con los siguientes datos
-  
+
     ```
       {
         "dni": string,
@@ -264,37 +280,61 @@ Estructura de carpetas modular
 
     nEmpleado = Es un numero de empleado valido por ej. 20246001073
 
-  - Obtener info inicio Jefe (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/docentes/info-inicio-
+  - Obtener info inicio Jefe (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/docentes/info-inicio-jefe
 
   - Obtener secciones por docente (Solo docentes tienen permisos): GET http://localhost:3001/api/v1/docentes/secciones
-  
-  - Obtener estudiantes del docente por seccion(permiso de docente): GET http://localhost:3001/api/v1/docentes/estudiantes/?seccionID=seccionID
-    (un ejemplo que funciona es seccionID=40)
 
-  - Ingresar notas de estudiante(permiso de docente): POST http://localhost:3001/api/v1/docentes/notas
-    JSON de ejemplo de ingresar notas.
-   
-    ```
-     {
-     "correo_electronico":"luisglainezw001@gmail.com" ,
-     "nota":100,
-     "cuenta":"20241001103",
-     "seccion": "40"
-     }
-    ```
-    datos de los JSON
+  - Obtener estudiantes del docente por seccion (Solo docentes tienen permisos): GET http://localhost:3001/api/v1/docentes/estudiantes/?seccionID=seccionID
 
-    ```
-     {
-     "correo_electronico": string ,
-     "nota":number,
-     "cuenta": string,
-     "seccion": string
-     }
-    ```
+    seccionID = id seccion valida
+
+  - Ingresar notas de estudiante(Solo docentes tienen permisos): POST http://localhost:3001/api/v1/docentes/notas
     
+    JSON con los siguientes datos
+
+    ```
+      {
+        "correo_electronico": string,
+        "nota": number,
+        "cuenta": string,
+        "seccion": string
+      }
+    ```
+
 - **Edificios**
+
   - Obtener edificios (Solo los jefes de depto tienen permisos): GET http://localhost:3001/api/v1/edificios/
+
+- **Estudiantes**
+  - Obtener Clases,Secciones y Docentes a los que evaluar (Paso anterior para luego evaluar): GET http://localhost:3001/api/v1/estudiante/secciones
+  
+  - Evaluar Docentes : POST http://localhost:3001/api/v1/estudiante/evaluacion
+    
+    JSON con los siguientes datos:
+
+    ```
+      {
+        "id_seccion": string,
+        "observaciones": string,
+        "area_personal": number,
+        "area_profesional": number,
+        "area_academico": number
+      }
+    ```
+
+    JSON con los tipos de datos ( los numeros estan restringidos del 1 al 5)
+
+    ```
+      {
+        "id_seccion": string,
+        "observaciones": string,
+        "area_personal":number ,
+        "area_profesional": number,
+        "area_academico":number
+      }
+    ```
+
+    - Obtener notas del estudiante (luego de haber evaluado al docente): GET http://localhost:3001/api/v1/estudiante/notas
 
 - **Login**: POST http://localhost:3001/api/v1/login
 
@@ -308,9 +348,11 @@ Estructura de carpetas modular
   ```
 
 - **Roles**
+
   - Obtener roles: GET http://localhost:3001/api/v1/roles/
 
 - **Secciones**
+
   - Obtener secciones por asignaturas (Solo jefes de depto tienen permisos): GET http://localhost:3001/api/v1/secciones/?codAsig=codAsig
 
     codAsig = codigo de asignatura valido por ej. IS-210
@@ -335,80 +377,54 @@ Estructura de carpetas modular
         "idSeccion": string,
         "justificacion": string
       }
-    ``` 
+    ```
 
   - Crear secciones (Solo jefes de depto tienen permisos): POST http://localhost:3001/api/v1/secciones/crear
-    
-    UN EJEMPLO CON LOS DATOS(No usar estos mismos por que les devolvera que hay traslape)
-  ```
-  {
-  "asignatura_cod": "IS-110",
-  "docente_n_empleado": "20246001040",
-  "lunes": 0,
-  "martes": 0,
-  "miercoles": 0,
-  "jueves": 0,
-  "viernes": 1,
-  "sabado": 0,
-  "domingo":0,
-  "hora_entrada": "11",
-  "hora_salida": "12",
-  "aula_id": "2",
-  "cupos": 25,
-  "duracion": "2"
-  }
-  ```
-  EL JSON en cuestion con los tipos de datos(Para los dias de la semana solo usar 1s y 0s significa verdadero y falso, en caso de la duracion "1" y "2" 1 para trimestral 2 para semestral)
-  ```
-  {
-  "asignatura_cod": string,
-  "docente_n_empleado": string,
-  "lunes": integer,
-  "martes": integer,
-  "miercoles": integer,
-  "jueves": integer,
-  "viernes": integer,
-  "sabado": integer,
-  "domingo":integer,
-  "hora_entrada": string,
-  "hora_salida": string,
-  "aula_id": string,
-  "cupos": integer,
-  "duracion": string
-  }
-  ```
 
- - **Estudiantes**
- - Funcionan siempre que se envie el token, no se ocupa enviar la cuenta del estudiante
-  - Obtener Clases,Secciones y Docentes a los que evaluar(Paso anterior para luego evaluar): GET http://localhost:3001/api/v1/estudiante/secciones
-  - Evaluar Docentes : POST  http://localhost:3001/api/v1/estudiante/evaluacion
-    JSON de Ejemplo(no se ocupa enviar al docente porque se hace la conexion con el por medio de la seccion en la base)
+    JSON con los siguientes datos
 
-     ```
-      {
-      "id_seccion": "40",
-      "observaciones": "Ese docente deja mucho trabajo",
-      "area_personal":2 ,
-      "area_profesional": 5,
-      "area_academico":3 
-     }
-    ```
-
-     JSON con los tipos de datos( los numeros estan restringidos del 1 al 5)
-    
     ```
       {
-      "id_seccion": string,
-      "observaciones": string,
-      "area_personal":number ,
-      "area_profesional": number,
-      "area_academico":number 
-     }
+        "asignatura_cod": string,
+        "docente_n_empleado": string,
+        "lunes": number,
+        "martes": number,
+        "miercoles": number,
+        "jueves": number,
+        "viernes": number,
+        "sabado": number,
+        "domingo":number,
+        "hora_entrada": string,
+        "hora_salida": string,
+        "aula_id": string,
+        "cupos": number,
+        "duracion": string
+      }
     ```
 
-    - Obtener notas del estudiante(luego de haber evaluado al docente): GET http://localhost:3001/api/v1/estudiante/notas
+    EL JSON en cuestion con los tipos de datos (Para los dias de la semana solo usar 1s y 0s significa verdadero y falso, en caso de la duracion "1" y "2" 1 para trimestral 2 para semestral)
+
+    ```
+      {
+        "asignatura_cod": string,
+        "docente_n_empleado": string,
+        "lunes": number,
+        "martes": number,
+        "miercoles": number,
+        "jueves": number,
+        "viernes": number,
+        "sabado": number,
+        "domingo":number,
+        "hora_entrada": string,
+        "hora_salida": string,
+        "aula_id": string,
+        "cupos": number,
+        "duracion": string
+      }
+    ```
 
 ## Tecnologias 🛠️
+
 ---
 
 - Nodejs
@@ -423,19 +439,21 @@ Estructura de carpetas modular
 - http-status-codes
 - csv-writer
 - csv-parser
-- bcrypt 
-- Joi 
+- bcrypt
+- Joi
 - ESLINT
 
 ## Scripts ⚒️​
+
 ---
 
 ### `npm run dev`
+
 Levantar el proyecto en modo de desarrollo
 
 ## Desarrolladores ​🦾​
 
-Backend: 
+Backend:
 
 [Carlos Rubio](https://github.com/Reyniery-Carlitos) ​🐺​
 
@@ -450,5 +468,3 @@ Frontend:
 [Mario Zelaya](https://github.com/MarioZ18) ​​🚀​
 
 [Joel Rodriguez](https://github.com/joelr-2002) ​​🚀​
-
-

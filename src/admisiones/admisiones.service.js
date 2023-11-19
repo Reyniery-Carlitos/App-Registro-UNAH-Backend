@@ -201,10 +201,10 @@ export default class ServiceAdmisiones {
         mensaje: `Error al descargar el CSV`,
       };
     }
-    
-    const csvWriter = crearCsv(rutaArchivo)
 
-    csvWriter.writeRecords(dataEstudiante)
+    const csvWriter = crearCsv(rutaArchivo)
+    
+    await csvWriter.writeRecords(dataEstudiante)
     .then(() => {
       console.log('Done')
     })

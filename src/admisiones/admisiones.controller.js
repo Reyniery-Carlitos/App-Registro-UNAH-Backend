@@ -41,6 +41,7 @@ export default class ControladorAdmisiones {
       // Debe obtener la info de la base de datos de los aspirantes aprobados
       const resultado = await serviceAdmisiones.obtenerCsvAspirantesAprobados()
 
+      console.log(resultado.entidad)
       res
       .status(resultado.codigoEstado)
       .sendFile(resultado.entidad)
