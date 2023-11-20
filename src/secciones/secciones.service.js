@@ -74,8 +74,8 @@ export default class ServiceSecciones{
     }
 
     for(let seccion of secciones) {
-      const listaEspera = await fnSPGet(pool, "OBTENER_LISTA_ESPERA", ["LISTA_ESPERA"], [seccion.id]);
-      const listaMatricula = await fnSPGet(pool, "OBTENER_LISTA_MATRICULADOS", ["MATRICULADOS"], [seccion.id]);
+      const listaEspera = await fnSPGet(pool, "OBTENER_LISTA_ESPERA", ["LISTA_ESPERA"], [seccion.ID]);
+      const listaMatricula = await fnSPGet(pool, "OBTENER_LISTA_MATRICULADOS", ["MATRICULADOS"], [seccion.ID]);
 
       seccion.LISTA_ESPERA = listaEspera[0].LISTA_ESPERA;
       seccion.MATRICULADOS = listaMatricula[0].MATRICULADOS;
