@@ -42,9 +42,9 @@ export class ControladorDocentes {
 
   async obtenerDocentePorNEmpleado(req = request, res = response) {
     try {
-      const nEmpleado = req.params.nEmpleado
+      const {usuario} = req.usuario;
       
-      const resultado = await docenteService.obtenerDocentePorNEmpleado(nEmpleado)
+      const resultado = await docenteService.obtenerDocentePorNEmpleado(usuario)
 
       res
         .status(resultado.codigoEstado)

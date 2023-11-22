@@ -34,9 +34,9 @@ validarJWT,
 esRolDocenteOJefe,
 controladorDocente.ingresarNotasPorDocente)
 
-routerDocentes.get('/:nEmpleado', 
+routerDocentes.get('/perfil', 
 validarJWT,
-esRolDocente,
+esRolDocenteOJefe,
 controladorDocente.obtenerDocentePorNEmpleado)
 
 routerDocentes.get('/', 

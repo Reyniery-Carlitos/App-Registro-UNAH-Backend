@@ -33,14 +33,14 @@ export class EstudianteServices {
     if (error !== undefined) {
       return {
         codigoEstado: StatusCodes.BAD_REQUEST,
-        mensaje: `Ocurrio un error al crear un nuevo docente: ${error.details[0].message}`,
+        mensaje: `Error al evaluar el docente: ${error.details[0].message}`,
         token: null
       };
     }
 
-    const{id_seccion,  observaciones,  area_personal,  area_profesional,  area_academico} = infoEvaluacion;
-    const inVARS=[id_seccion,usuario,observaciones,area_personal,  area_profesional,  area_academico]
-
+    const{id,  observaciones,  area_personal,  area_profesional,  area_academico} = infoEvaluacion;
+    const inVARS=[id,usuario,observaciones,area_personal,  area_profesional,  area_academico]
+ 
     const evaluacion= await fnSPCUD(pool, "EVALUACION_DOCENTE" ,inVARS);
 
     if (evaluacion.mensaje === null) {

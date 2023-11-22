@@ -11,7 +11,7 @@ const schemaEstudiantes = Joi.object({
 
 
 export  const schemaEvaluacionDocente = Joi.object({
-  id_seccion: Joi.string().min(1).max(15).required(),
+  id: Joi.string().min(1).max(15).required(),
   observaciones: Joi.string().min(1).max(200).required(),
   area_personal: Joi.number().required(),
   area_profesional: Joi.number().required(),

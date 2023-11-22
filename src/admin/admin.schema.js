@@ -18,7 +18,7 @@ export const schemaConfigurarPeriodo = Joi.object({
 });
 
 export const schemaConfigurarMatricula = Joi.object({
-  p_indice_inicio: Joi.number().min(1).max(100).required(),
+  p_indice_inicio: Joi.number().min(0).max(100).required(),
   p_indice_final: Joi.number().greater(Joi.ref("p_indice_inicio")).required(),
   p_fecha_inicio: Joi.date().min(fechaActual).required(),
   p_fecha_final: Joi.date().greater(Joi.ref("p_fecha_inicio")).required(),
