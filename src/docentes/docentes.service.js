@@ -6,6 +6,7 @@ import { schemaDocentes, schemaNotasEstudiantes } from "./docentes.schema.js"
 import createPool from '../database/database.config.js'
 import { fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js';
 import transporter from '../utils/transporter.js';
+import generarToken2 from '../utils/generarToken2.js';
 
 
 const pool = await createPool()
@@ -41,7 +42,7 @@ export class DocentesService {
 
     return {
       codigoEstado: StatusCodes.OK,
-      mensaje: 'Docente creado con éxito!.'
+      mensaje: docenteActual.mensaje
     };
   }
 
@@ -196,5 +197,149 @@ export class DocentesService {
       mensaje: NOTAS.mensaje
     }
   }
+
+
+  async obtenerSeccionesPorDocente2(DOCENTE){
+
+    const estructureSP = ["ID", "NOMBRE"]
+    const seccion= await fnSPGet(pool, "OBTENER_SECCIONES_DOCENTE", estructureSP, [DOCENTE]);
+
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `No se ha podido obtener las secciones`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Secciones Obtenidas Correctamente',
+      entidad: seccion
+    }
+  }
+
+  async obtenerEvaluacionesaDocentes(seccion) {
+    const estructureSP = ['AREA_PERSONAL','AREA_PROFESIONAL','AREA_ACADEMICA','OBSERVACIONES']
+
+    const secciones = await fnSPGet(pool, "OBTENEREVALUACIONDOCENTE", estructureSP, [seccion])
+
+    if (secciones === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se obtuvo ninguna evaluacion',
+        entidad: null
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Evaluaciones Obtenidas con Exito',
+      entidad: secciones
+    }
+  }
+
+
+  async obtenerEstadisticas(usuario) {
+    const estructureSP = ['NEMPLEADO','NOMBRE','AREA_PERSONAL','AREA_PROFESIONAL','AREA_ACADEMICA']
+
+    const secciones = await fnSPGet(pool, "OBTENERESTADISTICAS", estructureSP, [usuario])
+
+    if (secciones === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se obtuvo ninguna evaluacion',
+        entidad: null
+      }
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Evaluaciones Obtenidas con Exito',
+      entidad: secciones
+    }
+}
+
+
+async restablecerClave(DNI) {
+  const estructureSP = ['NEMPLEADO','NOMBRE','CORREO']
+
+  const persona = await fnSPGet(pool, "OBTENERCORREO", estructureSP, [DNI]);
+  const {NEMPLEADO,NOMBRE,CORREO}=persona[0];
+  const token = generarToken2({usuario: NEMPLEADO})
+  if (persona === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'No existe esa persona en la base',
+      entidad: null
+    }
+  }
+
+  let  mailOptions = {
+    from: 'unahproyecto6@gmail.com',
+    to: CORREO,
+    subject: 'RESTABLECER CONTRASEÑA DE ACCESO AL SISTEMA',
+    text: '\n\n DOCENTE: ' + NOMBRE + ' CON NUMERO DE EMPLEADO: ' + NEMPLEADO
+    + '\n\n INGRESE EN EL SIGUIENTE LINK PARA RESTABLECER CONTRASEÑA: http://192.168.191.114:3000/api/v1/docentes/restablecer-clave/?token='+token
+  };
+  await transporter.sendMail(mailOptions, function(err, data) {
+  if (err) {
+    console.log("Error " + err);
+  } else {
+    console.log("Email sent successfully");
+  }
+  });
+ 
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: 'Encontrado con exito',
+    entidad: persona
+  }
+}
+
+
+async restablecerCuenta(usuario,contrasenia) {
+  
+  const salt = await bcrypt.genSalt(10);
+  const contra = await bcrypt.hash(contrasenia, salt) 
+
+  const cuenta = await fnSPCUD(pool, "ENVIAR_CONTRA", [usuario,contra])
+
+  if (cuenta === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'No se obtuvo ninguna evaluacion',
+    }
+  }
+
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: cuenta.mensaje,
+  }
+}
+
+
+async obtenerPerfilDocente(seccion) {
+  const estructureSP = ['NOMBRE_DOCENTE','CORREOELECTRONICO','FOTO_EMPLEADO','DEPARTAMENTO','SECCION','ASIGNATURA','COD_ASIG']
+
+  const secciones = await fnSPGet(pool, "PERFIL_DOCENTE", estructureSP, [seccion])
+
+  if (secciones === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'No se obtuvo ninguna evaluacion',
+      entidad: null
+    }
+  }
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: 'Evaluaciones Obtenidas con Exito',
+    entidad: secciones
+  }
+}
+
+
 
 }

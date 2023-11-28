@@ -7,7 +7,7 @@ export const schemaConfigurarPeriodo = Joi.object({
   p_fec_nota_ini: Joi.date().min(fechaActual).required(),
   p_fec_nota_fin: Joi.date().greater(Joi.ref("p_fec_nota_ini")).required(),
   p_periodo_periodo: Joi.number().required(),
-  p_periodo_anio: Joi.date().iso("YYYY").min(anioActual).required(),
+  p_periodo_anio: Joi.string().required(),
   p_periodo_duracion_id: Joi.string().required(),
   p_fec_ini_plan: Joi.date().min(fechaActual).required(),
   p_fec_final_plan: Joi.date().greater(Joi.ref("p_fec_ini_plan")).required(),

@@ -17,4 +17,9 @@ validarJWT,
 esRolAdmin,
 controladorAdmin.obtenerInfoSigPeriodo)
 
+routerAdmin.get('/departamentos', 
+validarJWT,
+esRolAdmin,
+controladorAdmin.obtenerDepartamentosCentros)
+
 export default routerAdmin

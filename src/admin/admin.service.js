@@ -105,4 +105,16 @@ export class AdminService {
       entidad: dataPeriodo
     }
   }
+
+
+  async obtenerDepartamentosCentros(ID){
+    const estructureSP = ["ID", "NOMBRE"]
+    const dataPeriodo = await fnSPGet(pool, "DEPTOS_CENTRO", estructureSP, [ID])
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Departamentos obtenidos exitosamente',
+      entidad: dataPeriodo
+    }
+  }
 }

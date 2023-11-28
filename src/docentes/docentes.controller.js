@@ -123,4 +123,112 @@ export class ControladorDocentes {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async obtenerSeccionesPorDocente2(req = request, res = response) {
+    try {
+      const docente = req.query.nEmpleado
+      console.log(docente);
+      const resultado = await docenteService.obtenerSeccionesPorDocente2(docente)
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: 'Secciones Obtenidas Correctamente',
+          data: resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+  async obtenerEvaluacionesaDocentes(req = request, res = response) {
+    try {
+      const seccion= req.query.seccionID;
+      
+      const resultado = await docenteService.obtenerEvaluacionesaDocentes(seccion);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+
+
+  async obtenerEstadisticas(req = request, res = response) {
+    try {
+      const {usuario}= req.usuario;
+      
+      const resultado = await docenteService.obtenerEstadisticas(usuario);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+
+  async restablecerClave(req = request, res = response) {
+    try {
+      const DNI= req.query.DNI;
+      
+      const resultado = await docenteService.restablecerClave(DNI);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async restablecerCuenta(req = request, res = response) {
+    try {
+      const {usuario}= req.usuario;
+      const contrasenia = req.query.contrasenia;
+      const resultado = await docenteService.restablecerCuenta(usuario,contrasenia);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+
+  async obtenerPerfilDocente(req = request, res = response) {
+    try {
+      const seccion= req.query.seccion;
+      
+      const resultado = await docenteService.obtenerPerfilDocente(seccion);
+  
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+
+
 }

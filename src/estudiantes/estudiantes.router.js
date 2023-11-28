@@ -1,6 +1,6 @@
 import { Router } from "express";
 import validarJWT from '../middlewars/validarJWT.js'
-import { esRolEstudiante } from '../middlewars/validarRoles.js'
+import { esRolEstudiante, esRolJefeDepto} from '../middlewars/validarRoles.js'
 import {ControladorEstudiantes} from "./estudiantes.controller.js";
 
 const routerEstudiantes = Router()
@@ -24,6 +24,31 @@ controladorEstudiante.evaluarDocentePorEstudiante)
 routerEstudiantes.get('/notas',validarJWT,
 esRolEstudiante,
 controladorEstudiante.obtenerNotasPorEstudiante)
+
+routerEstudiantes.get('/matriculados',validarJWT,
+esRolJefeDepto,
+controladorEstudiante.obtenerEstudiantesMatriculados)
+
+routerEstudiantes.get('/matricula',validarJWT,
+esRolEstudiante,
+controladorEstudiante.obtenerPerfilMatricula) 
+
+routerEstudiantes.get('/clases-matricular',validarJWT,
+esRolEstudiante,
+controladorEstudiante.obtenerSeccionesParaMatricular)
+
+routerEstudiantes.post('/cancelar-seccion',validarJWT,
+esRolEstudiante,
+controladorEstudiante.cancelarSeccionEstudiante)
+
+
+routerEstudiantes.post('/adicionar-seccion',validarJWT,
+esRolEstudiante,
+controladorEstudiante.adicionarSeccionEstudiante)
+
+routerEstudiantes.get('/historial-academico',validarJWT,
+esRolJefeDepto,
+controladorEstudiante.obtenerHistorialAcademico)
 
 
 export default routerEstudiantes

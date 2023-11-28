@@ -1,4 +1,4 @@
-import {request, response} from 'express'
+ import {request, response} from 'express'
 import { StatusCodes } from 'http-status-codes'
 import { leerCSV } from "../utils/leerCSV.js";
 import {EstudianteServices} from "./estudiantes.service.js";
@@ -77,5 +77,110 @@ export class ControladorEstudiantes {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
 }
+async obtenerEstudiantesMatriculados(req = request, res = response) {
+  
+  try {
+    const resultado = await estudianteService.obtenerEstudiantesMatriculados()
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: "Estudiantes Obtenidos Correctamente",
+        data: resultado.entidad
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
 
+async obtenerPerfilMatricula(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario;
+    const resultado = await estudianteService.obtenerPerfilMatricula(usuario);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: "Perfil Obtenido correctamente",
+        perfil: resultado.entidad,
+        clases:resultado.entidad2
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+async obtenerSeccionesParaMatricular(req = request, res = response) {
+  
+  try {
+    const {usuario} = req.usuario;
+    const resultado = await estudianteService.obtenerSeccionesParaMatricular(usuario)
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: "Secciones obtenidas correctamente",
+        data: resultado.entidad
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+
+async cancelarSeccionEstudiante(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario;
+    const seccion = req.query.seccionID
+    const resultado = await estudianteService.cancelarSeccionEstudiante(usuario,seccion);
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+async adicionarSeccionEstudiante(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario;
+    const seccion = req.query.seccionID
+    const resultado = await estudianteService.adicionarSeccionEstudiante(usuario,seccion);
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+
+async obtenerHistorialAcademico(req = request, res = response) {
+  try {
+    const {usuario}= req.usuario;
+    
+    const resultado = await estudianteService.obtenerHistorialAcademico(usuario);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        infoestudiante:resultado.entidad,
+        estudiante:resultado.entidad2
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
 }

@@ -49,4 +49,21 @@ export class ControladorAdmin{
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
     }
   }
+
+  async obtenerDepartamentosCentros(req = request, res = response) {
+    try {
+      const idCentro = req.query.idCentro
+      const resultado = await serviceAdmin.obtenerDepartamentosCentros(idCentro)
+
+      res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado?.mensaje,
+        data: resultado.entidad
+      })
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
 }

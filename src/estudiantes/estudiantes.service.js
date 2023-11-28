@@ -77,4 +77,137 @@ export class EstudianteServices {
   }
 
 
+  async obtenerEstudiantesMatriculados(){
+
+    const estructureSP = ["CUENTA", "NOMBRE", "CARRERA"]
+    const seccion= await fnSPGet(pool, "OBTENER_ESTUDIANTES_MATRICULADOS", estructureSP, []);
+
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `No se han podido obtener los estudiantes matriculados`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Estudiantes Obtenidos Correctamente',
+      entidad: seccion
+    }
+  }
+
+
+  async obtenerPerfilMatricula(usuario,seccion){
+
+    const estructureSP1 = ["CUENTA", "NOMBRE", "PERIODO","AÑO","UV"]
+    const perfil= await fnSPGet(pool, "PERFIL_MATRICULA_ESTUDIANTE", estructureSP1, [usuario]);
+    const estructureSP2 = ["ID","COD_ASIGNATURA","ASIGNATURA","SECCION","UV","HORA_INICIO","HORA_FIN","DOCENTE","LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO","DOMINGO"]
+    const clases= await fnSPGet(pool, "OBTENER_CLASES_MATRICULADAS", estructureSP2, [usuario]);
+    const estructureSP3 = ["INDICE"]
+    const indice = await fnSPGet(pool, "OBTENER_INDICE", estructureSP3, [usuario]);
+    
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `No se ha podido encontrar las secciones del estudiante`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Secciones obtenidas correctamente',
+      entidad: perfil ,
+      entidad2: clases
+    }
+  }
+
+
+
+  async obtenerSeccionesParaMatricular(usuario){
+
+    const estructureSP = ["SECCION_ID", "NOMBRE_SECCION", "NOMBRE_ASIGNATURA","NOMBRE_REQUISITO","COD_ASIGNATURA","COD_REQUISITO","HORA_INICIO","HORA_FINALl","DOCENTE","LUNES","MARTES","MIERCOLES","JUEVES","VIERNES","SABADO","DOMINGO"]
+    const seccion= await fnSPGet(pool, "OBTENER_CLASES_A_MATRICULAR", estructureSP, [usuario]);
+    const estructureSP2 = ["COD_ASIGNATURA"]
+    const seccion2= await fnSPGet(pool, "OBTENER_CLASES_CURSADAS", estructureSP2, [usuario]);
+    console.log(seccion)
+    console.log(seccion2)
+
+    const codigosAExcluir = seccion2.map(asignatura => asignatura.COD_ASIGNATURA);
+
+// Filtra el primer JSON excluyendo las asignaturas con códigos presentes en el segundo JSON
+  const primerJSONFiltrado = seccion.filter(asignatura => !codigosAExcluir.includes(asignatura.COD_ASIGNATURA));
+
+  console.log(primerJSONFiltrado);
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `No se han podido obtener los estudiantes matriculados`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Estudiantes Obtenidos Correctamente',
+      entidad: primerJSONFiltrado
+    }
+  }
+
+  async cancelarSeccionEstudiante(usuario,seccionID){
+
+    const seccion= await fnSPCUD(pool, "CANCELAR_ASIGNATURA_ESTUDIANTE", [usuario,seccionID]);
+
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `ERROR AL CANCELAR ASIGNATURA`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: seccion.mensaje
+    }
+  }
+
+  async adicionarSeccionEstudiante(usuario,seccionID){
+
+    const seccion= await fnSPCUD(pool, "ADICIONAR_ASIGNATURA", [usuario,seccionID]);
+
+    if (seccion === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `ERROR AL ADICIONAR ASIGNATURA`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: seccion.mensaje
+    }
+  }
+
+
+
+  async obtenerHistorialAcademico(usuario){
+
+    const estructureSP = ["NOMBRE_ALUMNO", "N_CUENTA", "NOMBRE_ASIGNATURA","CALIFICACION"];
+    const estructureSP2 = ["NOMBRE_ALUMNO", "N_CUENTA", "CARRERA"];
+    const estudiante= await fnSPGet(pool, "HISTORIAL_ACADEMICO", estructureSP, [usuario]);
+    const estudiante2= await fnSPGet(pool, "PERFIL_ESTUDIANTE", estructureSP2, [usuario]);
+
+    if (usuario === null) {
+      return {
+        codigoEstado: StatusCodes.NOT_FOUND,
+        mensaje: `No se han podido obtener los estudiantes matriculados`
+      }
+    }
+  
+    return {
+      codigoEstado: StatusCodes.OK,
+      mensaje: 'Estudiantes Obtenidos Correctamente',
+      entidad: estudiante,
+      entidad2:estudiante2
+    }
+  }
+
 }
