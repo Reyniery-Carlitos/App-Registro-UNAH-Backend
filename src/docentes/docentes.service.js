@@ -7,7 +7,9 @@ import createPool from '../database/database.config.js'
 import { fnSPCUD, fnSPGet } from '../utils/databaseFunctions.js';
 import transporter from '../utils/transporter.js';
 import generarToken2 from '../utils/generarToken2.js';
-
+import {crearXLSX,crearXLSX2} from '../utils/escribir-hoja-calculo.js';
+import {crearPDF} from '../utils/escribir-pdf.js';
+import path from 'node:path';
 
 const pool = await createPool()
 
@@ -97,7 +99,7 @@ export class DocentesService {
   }
 
   async obtenerSeccionesPorDocente(usuario) {
-    const estructureSP = ['ID_SECCION', 'NOMBRE_SECCION', 'NOMBRE_ASIGNATURA']
+    const estructureSP = ['ID_SECCION', 'NOMBRE_SECCION', 'NOMBRE_ASIGNATURA','VIDEO']
     console.log(usuario)
     const secciones = await fnSPGet(pool, "SECCION_DOCENTE", estructureSP, [usuario])
 
@@ -279,7 +281,7 @@ async restablecerClave(DNI) {
     to: CORREO,
     subject: 'RESTABLECER CONTRASEÑA DE ACCESO AL SISTEMA',
     text: '\n\n DOCENTE: ' + NOMBRE + ' CON NUMERO DE EMPLEADO: ' + NEMPLEADO
-    + '\n\n INGRESE EN EL SIGUIENTE LINK PARA RESTABLECER CONTRASEÑA: http://192.168.191.114:3000/api/v1/docentes/restablecer-clave/?token='+token
+    + '\n\n INGRESE EN EL SIGUIENTE LINK PARA RESTABLECER CONTRASEÑA: http://192.168.191.114:3000/api/restablecer-clave/?token='+token
   };
   await transporter.sendMail(mailOptions, function(err, data) {
   if (err) {
@@ -321,7 +323,7 @@ async restablecerCuenta(usuario,contrasenia) {
 
 
 async obtenerPerfilDocente(seccion) {
-  const estructureSP = ['NOMBRE_DOCENTE','CORREOELECTRONICO','FOTO_EMPLEADO','DEPARTAMENTO','SECCION','ASIGNATURA','COD_ASIG']
+  const estructureSP = ['NOMBRE_DOCENTE','CORREOELECTRONICO','FOTO_EMPLEADO','DEPARTAMENTO','SECCION','ASIGNATURA','COD_ASIG','VIDEO']
 
   const secciones = await fnSPGet(pool, "PERFIL_DOCENTE", estructureSP, [seccion])
 
@@ -341,5 +343,304 @@ async obtenerPerfilDocente(seccion) {
 }
 
 
+async descargarEstudiantesSeccion(seccion) {
+  try {
+    const titulo = await fnSPCUD(pool, "TITULO_SECCION", [seccion]);
+    const tituloConGuiones = titulo.mensaje.replace(/\s+/g, '_');
+
+    const estructureSP = ['N_CUENTA', 'NOMBRE_COMPLETO', 'CORREO'];
+
+    const dataEstudiante = await fnSPGet(pool, "ESTUDIANTES_SECCION", estructureSP, [seccion]);
+    console.log(dataEstudiante);
+
+    if (dataEstudiante === null) {
+      return {
+        codigoEstado: StatusCodes.BAD_REQUEST,
+        mensaje: 'No se ha podido obtener el archivo',
+        entidad: null
+      };
+    }
+
+    const rutaArchivo = path.join(
+      process.cwd(),
+      "src",
+      "public",
+      "xlsx",
+      tituloConGuiones + ".xlsx"
+    );
+
+    const escribirArchivo = async () => {
+      try {
+        await crearXLSX(rutaArchivo, dataEstudiante);
+        console.log('Done');
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    await escribirArchivo(); // Note: Use 'await' here if 'escribirArchivo' returns a promise.
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      entidad: rutaArchivo
+    };
+  } catch (err) {
+    if(err='ORA-01403'){
+      console.log('No se encuentra la seccion');
+    }
+  }
+}
+
+async descargarPlanificacion(usuario) {
+  try {
+
+    const estructureSP2 = ['PERIODO', 'AÑO'];
+    const periodo = await fnSPGet(pool, "PERIODO_ACTUAL", estructureSP2, []);   
+    const estructureSP3 = ['DEPARTAMENTO'];
+  
+    const departamento = await fnSPGet(pool, "DEPARTAMENTO_COORDINADOR", estructureSP3, [usuario]);
+    const estructureSP = ['N_SECCION','SECCION', 'CODIGO_ASIGNATURA', 'ASIGNATURA', 'N_EMPLEADO','DOCENTE', 'CUPOS','EDIFICIO', 'AULA', 'HORA_INICIO','HORA_FINAL'];
+    const data = await fnSPGet(pool, "CARGA_ACADEMICA", estructureSP, [usuario]);
+
+    const estructureSP1 = ['MATRICULADOS']
+
+       
+    for (const element of data) {
+     
+      const matriculados = await fnSPGet(pool, "OBTENER_LISTA_MATRICULADOS", estructureSP1, [element.N_SECCION]);
+      element.MATRICULADOS = matriculados.length > 0 ? matriculados[0].MATRICULADOS : null;
+    }
+
+    const rutaArchivo = path.join(
+      process.cwd(),
+      "src",
+      "public",
+      "xlsx",
+      "Planificacion "+periodo[0].PERIODO + "_" + periodo[0].AÑO + "_" + departamento[0].DEPARTAMENTO + ".xlsx"
+    );
+
+    const escribirArchivo = async () => {
+      try {
+        await crearXLSX2(rutaArchivo, data);
+        console.log('Done');
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    await escribirArchivo(); 
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      entidad: rutaArchivo
+    };
+  } catch (err) {
+    console.log('Creando archivos');
+  }
+}
+
+
+async descargarPlanificacion2(usuario) {
+  try {
+
+    const estructureSP2 = ['PERIODO', 'AÑO'];
+    const periodo = await fnSPGet(pool, "PERIODO_ACTUAL", estructureSP2, []);   
+    const estructureSP3 = ['DEPARTAMENTO'];
+  
+    const departamento = await fnSPGet(pool, "DEPARTAMENTO_COORDINADOR", estructureSP3, [usuario]);
+    const estructureSP = ['N_SECCION','SECCION', 'CODIGO_ASIGNATURA', 'ASIGNATURA', 'N_EMPLEADO','DOCENTE', 'CUPOS','EDIFICIO', 'AULA', 'HORA_INICIO','HORA_FINAL'];
+    const data = await fnSPGet(pool, "CARGA_ACADEMICA", estructureSP, [usuario]);
+
+    const estructureSP1 = ['MATRICULADOS']
+
+       
+    for (const element of data) {
+     
+      const matriculados = await fnSPGet(pool, "OBTENER_LISTA_MATRICULADOS", estructureSP1, [element.N_SECCION]);
+      element.MATRICULADOS = matriculados.length > 0 ? matriculados[0].MATRICULADOS : null;
+    }
+
+    const rutaArchivo = path.join(
+      process.cwd(),
+      "src",
+      "public", 
+      "pdf",
+      "Planificacion "+periodo[0].PERIODO + "_" + periodo[0].AÑO + "_" + departamento[0].DEPARTAMENTO + ".pdf"
+    );
+
+    const escribirArchivo = async () => {
+      try {
+        await crearPDF(rutaArchivo, data);
+        console.log('Done');
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    await escribirArchivo(); 
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      entidad: rutaArchivo
+    };
+  } catch (err) {
+    console.log('Creando archivos');
+  }
+}
+
+
+
+async obtenerSolicitudesCambioCar(usuario) {
+  const estructureSP = ['ID_SOLICITUD','NOMBRE_ESTUDIANTE','ID_ESTUDIANTE','NUEVA_CARRERA','FECHA_SOLICITUD','ESTADO','JUSTIFICACION' ]
+
+  const solicitudes = await fnSPGet(pool, "OBTENER_CAMBIO_CAR", estructureSP, [usuario])
+
+  if (solicitudes === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'No se obtuvo ninguna evaluacion',
+      entidad: null
+    }
+  }
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: 'Evaluaciones Obtenidas con Exito',
+    entidad: solicitudes
+  }
+}
+
+async obtenerSolicitudesCambioCentro(usuario) {
+  const estructureSP = ['ID_SOLICITUD', 'NOMBRE', 'CUENTA', 'NUEVO_CENTRO', 'FECHA_SOLICITUD',"JUSTIFICACION", 'ESTADO']
+  console.log(usuario)
+  const solicitudes = await fnSPGet(pool, "OBTENER_CAMBIO_CENTRO", estructureSP, [usuario])
+  console.log(solicitudes)
+  if (solicitudes === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'No se obtuvo ningun centro',
+      entidad: null
+    }
+  }
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: 'Solicitudes obtenidas exitosamente',
+    entidad: solicitudes
+  }
+}
+
+
+async visualizarPlanificacion(usuario) {
+  try {
+
+    const estructureSP = ['N_SECCION','SECCION', 'CODIGO_ASIGNATURA', 'ASIGNATURA', 'N_EMPLEADO','DOCENTE', 'CUPOS','EDIFICIO', 'AULA', 'HORA_INICIO','HORA_FINAL'];
+    const data = await fnSPGet(pool, "CARGA_ACADEMICA", estructureSP, [usuario]);
+
+    const estructureSP1 = ['MATRICULADOS']
+
+       
+    for (const element of data) {
+     
+      const matriculados = await fnSPGet(pool, "OBTENER_LISTA_MATRICULADOS", estructureSP1, [element.N_SECCION]);
+      element.MATRICULADOS = matriculados.length > 0 ? matriculados[0].MATRICULADOS : null;
+    }
+
+    return {
+      codigoEstado: StatusCodes.OK,
+      entidad: data
+    };
+  } catch (err) {
+    console.log('Creando archivos');
+  }
+}
+
+async actualizarSolicitudCambioCentro(solicitud,verificacion) {
+  const cuenta = await fnSPCUD(pool, "verificar_cambio_centro", [solicitud,verificacion])
+
+  if (cuenta === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'ERROR AL PROCESAR LA SOLICITUD',
+    }
+  }
+
+
+  
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: cuenta.mensaje,
+  }
+}
+
+
+async actualizarSolicitudCambioCarrera(solicitud,verificacion) {
+  const cuenta = await fnSPCUD(pool, "verificar_cambio_car", [solicitud,verificacion])
+
+  if (cuenta === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'ERROR AL PROCESAR LA SOLICITUD',
+    }
+  }
+
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: cuenta.mensaje,
+  }
+}
+
+
+async actualizarSolicitudCancelacion(solicitud,verificacion) {
+  const cuenta = await fnSPCUD(pool, "verificar_S_CANCEL_EXC", [solicitud,verificacion])
+
+  if (cuenta === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'ERROR AL PROCESAR LA SOLICITUD',
+    }
+  }
+
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: cuenta.mensaje,
+  }
+}
+
+async subirVideo({seccion, video}) {
+  const videoData = await fnSPCUD(pool, 'AGREGAR_VIDEO', [seccion, video])
+  console.log(videoData)
+  console.log(video)
+  console.log(seccion)
+  if (videoData.mensaje === null) {
+    return {
+      codigoEstado: StatusCodes.BAD_REQUEST,
+      mensaje: 'Error al subir el video a la base de datos',
+    }
+  }
+
+
+  return {
+    codigoEstado: StatusCodes.OK,
+    mensaje: videoData.mensaje
+  }
+}
+
+async obtenerCancelacionesExcepcionales(usuario) {
+  try {
+
+    const estructureSP = ['ID_SOLICITUD','ESTUDIANTE','CUENTA','FECHA','NOMBRE_SECCION','ASIGNATURA','JUSTIFICACION','ESTADO'];
+    const data = await fnSPGet(pool, "OBTENER_CANCELACION_EXC", estructureSP, [usuario]);
+    
+    return {
+      codigoEstado: StatusCodes.OK,
+      entidad: data
+    };
+  } catch (err) {
+    console.log('Creando archivos');
+  }
+}
 
 }

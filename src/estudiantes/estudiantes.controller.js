@@ -169,7 +169,7 @@ async adicionarSeccionEstudiante(req = request, res = response) {
 async obtenerHistorialAcademico(req = request, res = response) {
   try {
     const {usuario}= req.usuario;
-    
+    console.log(usuario)
     const resultado = await estudianteService.obtenerHistorialAcademico(usuario);
 
     res
@@ -183,4 +183,221 @@ async obtenerHistorialAcademico(req = request, res = response) {
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
   }
 }
+
+async restablecerClave(req = request, res = response) {
+  try {
+    const DNI= req.query.DNI;
+    
+    const resultado = await estudianteService.restablecerClave(DNI);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        data:resultado.entidad
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+async restablecerCuenta(req = request, res = response) {
+  try {
+    const {usuario}= req.usuario;
+    const contrasenia = req.query.contrasenia;
+    const resultado = await estudianteService.restablecerCuenta(usuario,contrasenia);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        data:resultado.entidad
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+async solicitudCambioCarrea(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario
+    const infoCambioCarrera= req.body;
+
+
+    const resultado = await estudianteService.solicitudCambioCarrea(usuario,infoCambioCarrera);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+
+}
+
+async solicitudCambioCentro(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario
+    const infoCambioCentro= req.body;
+
+
+    const resultado = await estudianteService.solicitudCambioCentro(usuario,infoCambioCentro);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+
+}
+
+
+async solicitudCancelacion(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario
+    const infoCancelacion= req.body;
+
+    const resultado = await estudianteService.solicitudCancelacion({usuario, infoCancelacion, foto_cancelacion: '/public/' + req.file.filename});
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+
+}
+
+
+async solicitudRepo(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario
+    const infoRepo= req.body;
+
+
+    const resultado = await estudianteService.solicitudRepo(usuario,infoRepo);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+
+}
+
+async obtenerSolicitudes(req = request, res = response) {
+  try {
+    const {usuario}= req.usuario;
+    
+    const resultado = await estudianteService.obtenerSolicitudes(usuario);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        infoSolicitud:resultado.entidad
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+
+async obtenerHistorialAcademico2(req = request, res = response) {
+  try {
+    const usuario= req.query.estudiante;
+    console.log(usuario)
+    const resultado = await estudianteService.obtenerHistorialAcademico(usuario);
+
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        infoestudiante:resultado.entidad,
+        estudiante:resultado.entidad2
+      });
+  } catch (err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+
+async obtenerPerfil(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario;
+    const resultado = await estudianteService.obtenerPerfil(usuario);
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+        perfil:resultado.entidad,
+        fotos:resultado.entidad2
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+async subirFotoPerfil(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario;
+    const resultado = await estudianteService.subirFotoPerfil({usuario, foto_perfil: '/public/' + req.file.filename});
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+
+async agregarDescripcion(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario;
+    const descripcion=req.query.descripcion
+    const resultado = await estudianteService.agregarDescripcion(usuario,descripcion);
+   
+    res
+      .status(resultado.codigoEstado)
+      .json({
+        mensaje: resultado.mensaje,
+      });
+  } catch (err) {
+    
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+  }
+}
+
+async descargarHistorial(req = request, res = response) {
+  try {
+    const {usuario} = req.usuario
+    console.log(usuario);
+
+    const resultado = await estudianteService.descargarHistorial(usuario)
+
+    console.log(resultado.entidad)
+    res
+    .status(resultado.codigoEstado)
+    .sendFile(resultado.entidad)
+  } catch(err) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err);
+  }
+}
+
 }

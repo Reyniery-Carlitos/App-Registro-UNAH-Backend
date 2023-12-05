@@ -1,10 +1,10 @@
 import Router from 'express'
 
 import validarJWT from '../middlewars/validarJWT.js'
-import { esRolAdmin, esRolAdminOJefe, esRolDocente, esRolDocenteOJefe, esRolJefeDepto,esRolEstudiante } from '../middlewars/validarRoles.js'
+import { esRolAdmin, esRolAdminOJefe, esRolDocente, esRolDocenteOJefe, esRolJefeDepto,esRolEstudiante} from '../middlewars/validarRoles.js'
 import { ControladorDocentes } from './docentes.controller.js'
 
-import {upload} from '../middlewars/almacenarArchivo.js'
+import {upload, uploadVideo} from '../middlewars/almacenarArchivo.js'
 import validarJWT2 from '../middlewars/validarJWT2.js'
 
 const routerDocentes = Router()
@@ -74,9 +74,60 @@ controladorDocente.restablecerCuenta)
 
 routerDocentes.get('/perfil-docente', 
 validarJWT,
-esRolEstudiante,
+
 controladorDocente.obtenerPerfilDocente)
+
+
+routerDocentes.get('/descargar-estudiantes', 
+validarJWT,
+esRolDocenteOJefe,
+controladorDocente.descargarEstudiantesPorSeccion)
+
+routerDocentes.get('/descargar-planificacion/excel', 
+validarJWT,
+controladorDocente.descargarPlanificacion)
+
+
+routerDocentes.get('/descargar-planificacion/pdf', 
+validarJWT,
+controladorDocente.descargarPlanificacion2)
+
+routerDocentes.get('/obtener-cambio-car', 
+validarJWT,
+controladorDocente.obtenerSolicitudesCambioCar)
+
+routerDocentes.get('/obtener-cambio-centro', 
+validarJWT, 
+controladorDocente.obtenerSolicitudesCambioCentro) 
+
+routerDocentes.get('/visualizar-planificacion', 
+validarJWT,
+controladorDocente.visualizarPlanificacion)
+
+routerDocentes.post('/actualizacion/cambio-centro', 
+validarJWT,
+controladorDocente.actualizarSolicitudCambioCentro)
+
+routerDocentes.post('/actualizacion/cambio-carrera', 
+validarJWT,
+controladorDocente.actualizarSolicitudCambioCarrera)
+
+routerDocentes.post('/actualizacion/cancelacion-excepcional', 
+validarJWT,
+controladorDocente.actualizarSolicitudCancelacion)
+
+routerDocentes.get('/obtener-cancelaciones-excepcionales', 
+validarJWT,
+controladorDocente.obtenerCancelacionesExcepcionales)
+
+routerDocentes.post('/subir-video',
+  validarJWT,
+  uploadVideo.single('video'),
+  controladorDocente.subirVideo
+)
+
 
 
 
 export default routerDocentes
+  

@@ -97,7 +97,7 @@ export const esRolDocenteOJefe = (req = request, res = response, next) => {
 
   const {usuario, rol} = req.usuario
   
-  if(rol === 'jefe' || rol === 'docente') {
+  if(rol === 'jefe' || rol === 'docente' || rol === 'coordinador') {
     
     next()
   } else {
