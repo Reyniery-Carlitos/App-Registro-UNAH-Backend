@@ -18,3 +18,23 @@ export  const schemaEvaluacionDocente = Joi.object({
   area_academico: Joi.number().required(),
 })
 
+export  const schemaCambioCarrera = Joi.object({
+  justificacion: Joi.string().min(1).max(200).required(),
+  id_carrera: Joi.string().min(1).max(15).required()
+})
+
+export  const schemaCambioCentro = Joi.object({
+  justificacion: Joi.string().min(1).max(200).required(),
+  id_centro: Joi.string().min(1).max(15).required()
+})
+
+export  const schemaCancelacion = Joi.object({
+  // documento: Joi.string().min(1).max(200).required(),
+  justificacion: Joi.string().min(1).max(200).required(),
+  id_seccion: Joi.string().min(1).max(15).required()
+})
+
+export  const schemaRepo = Joi.object({
+  justificacion: Joi.string().min(1).max(200).required()
+})
+

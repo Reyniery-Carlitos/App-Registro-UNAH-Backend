@@ -10,7 +10,6 @@ export class ControladorDocentes {
     try {
       const infoDocente = req.body
       const docente = {...infoDocente, foto_empleado: '/public/' + req.file.filename}
-      console.log(infoDocente)
 
       const resultado = await docenteService.crear(docente)
 
@@ -229,6 +228,188 @@ export class ControladorDocentes {
     }
   }
 
+  async descargarEstudiantesPorSeccion(req = request, res = response) {
+    try {
+      const seccion = req.query.seccionID
+      
+      const resultado = await docenteService.descargarEstudiantesSeccion(seccion)
+
+      console.log(resultado.entidad)
+      res
+      .status(resultado.codigoEstado)
+      .sendFile(resultado.entidad)
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`No se encuentra la seccion`);
+    }
+  }
+
+  async descargarPlanificacion(req = request, res = response) {
+    try {
+      const {usuario} = req.usuario
+      
+      const resultado = await docenteService.descargarPlanificacion(usuario)
+
+      console.log(resultado.entidad)
+      res
+      .status(resultado.codigoEstado)
+      .sendFile(resultado.entidad)
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`No se encuentra la planificacion`);
+    }
+  }
+
+  async descargarPlanificacion2(req = request, res = response) {
+    try {
+      const {usuario} = req.usuario
+      
+      const resultado = await docenteService.descargarPlanificacion2(usuario)
+
+      console.log(resultado.entidad)
+      res
+      .status(resultado.codigoEstado)
+      .sendFile(resultado.entidad)
+    } catch(err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`No se encuentra la planificacion`);
+    }
+  }
+
+  
+  async obtenerSolicitudesCambioCar(req = request, res = response) {
+    try {
+      const {usuario}= req.usuario;
+      
+      const resultado = await docenteService.obtenerSolicitudesCambioCar(usuario);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async obtenerSolicitudesCambioCentro(req = request, res = response) {
+    try {
+      const {usuario} = req.usuario
+  
+      const resultado = await docenteService.obtenerSolicitudesCambioCentro(usuario)
+  
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data: resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async visualizarPlanificacion(req = request, res = response) {
+    try {
+      const {usuario}= req.usuario;
+      
+      const resultado = await docenteService.visualizarPlanificacion(usuario);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async actualizarSolicitudCambioCentro(req = request, res = response) {
+    try {
+      const solicitud= req.query.nsolicitud;
+      const verificacion=req.query.actualizacion;
+      
+      const resultado = await docenteService.actualizarSolicitudCambioCentro(solicitud,verificacion);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async actualizarSolicitudCambioCarrera(req = request, res = response) {
+    try {
+      const solicitud= req.query.nsolicitud;
+      const verificacion=req.query.actualizacion;
+      
+      const resultado = await docenteService.actualizarSolicitudCambioCarrera(solicitud,verificacion);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 
 
+  async actualizarSolicitudCancelacion(req = request, res = response) {
+    try {
+      const solicitud= req.query.nsolicitud;
+      const verificacion=req.query.actualizacion;
+      
+      const resultado = await docenteService.actualizarSolicitudCancelacion(solicitud,verificacion);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  async subirVideo(req = request, res = response) {
+    try {
+      const seccion = req.query.seccion
+    console.log(seccion)
+      const resultado = await docenteService.subirVideo({seccion, video: '/public/' + req.file.filename});
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
+
+  
+  async obtenerCancelacionesExcepcionales(req = request, res = response) {
+    try {
+      const {usuario}= req.usuario;
+     
+      const resultado = await docenteService.obtenerCancelacionesExcepcionales(usuario);
+
+      res
+        .status(resultado.codigoEstado)
+        .json({
+          mensaje: resultado.mensaje,
+          data:resultado.entidad
+        });
+    } catch (err) {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(`Server error: ${err}`);
+    }
+  }
 }
